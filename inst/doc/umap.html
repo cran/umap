@@ -1,206 +1,75 @@
 <!DOCTYPE html>
-<html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>Introduction</title>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
 
-<script type="text/javascript">
-window.onload = function() {
-  var imgs = document.getElementsByTagName('img'), i, img;
-  for (i = 0; i < imgs.length; i++) {
-    img = imgs[i];
-    // center an image if it is the only element of its parent
-    if (img.parentElement.childElementCount === 1)
-      img.parentElement.style.textAlign = 'center';
-  }
-};
-</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- Styles for R syntax highlighter -->
+
+
+<title>Uniform Manifold Approximation and Projection in R</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-   pre .operator,
-   pre .paren {
-     color: rgb(104, 118, 135)
-   }
-
-   pre .literal {
-     color: #990073
-   }
-
-   pre .number {
-     color: #099;
-   }
-
-   pre .comment {
-     color: #998;
-     font-style: italic
-   }
-
-   pre .keyword {
-     color: #900;
-     font-weight: bold
-   }
-
-   pre .identifier {
-     color: rgb(0, 0, 0);
-   }
-
-   pre .string {
-     color: #d14;
-   }
-</style>
-
-<!-- R syntax highlighter -->
-<script type="text/javascript">
-var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
-hljs.initHighlightingOnLoad();
-</script>
-
-
-
-<style type="text/css">
-body, td {
-   font-family: sans-serif;
-   background-color: white;
-   font-size: 13px;
-}
-
-body {
-  max-width: 800px;
-  margin: auto;
-  padding: 1em;
-  line-height: 20px;
-}
-
-tt, code, pre {
-   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
-}
-
-h1 {
-   font-size:2.2em;
-}
-
-h2 {
-   font-size:1.8em;
-}
-
-h3 {
-   font-size:1.4em;
-}
-
-h4 {
-   font-size:1.0em;
-}
-
-h5 {
-   font-size:0.9em;
-}
-
-h6 {
-   font-size:0.8em;
-}
-
-a:visited {
-   color: rgb(50%, 0%, 50%);
-}
-
-pre, img {
-  max-width: 100%;
-}
-pre {
-  overflow-x: auto;
-}
-pre code {
-   display: block; padding: 0.5em;
-}
-
-code {
-  font-size: 92%;
-  border: 1px solid #ccc;
-}
-
-code[class] {
-  background-color: #F8F8F8;
-}
-
-table, td, th {
-  border: none;
-}
-
-blockquote {
-   color:#666666;
-   margin:0;
-   padding-left: 1em;
-   border-left: 0.5em #EEE solid;
-}
-
-hr {
-   height: 0px;
-   border-bottom: none;
-   border-top-width: thin;
-   border-top-style: dotted;
-   border-top-color: #999999;
-}
-
-@media print {
-   * {
-      background: transparent !important;
-      color: black !important;
-      filter:none !important;
-      -ms-filter: none !important;
-   }
-
-   body {
-      font-size:12pt;
-      max-width:100%;
-   }
-
-   a, a:visited {
-      text-decoration: underline;
-   }
-
-   hr {
-      visibility: hidden;
-      page-break-before: always;
-   }
-
-   pre, blockquote {
-      padding-right: 1em;
-      page-break-inside: avoid;
-   }
-
-   tr, img {
-      page-break-inside: avoid;
-   }
-
-   img {
-      max-width: 100% !important;
-   }
-
-   @page :left {
-      margin: 15mm 20mm 15mm 10mm;
-   }
-
-   @page :right {
-      margin: 15mm 10mm 15mm 20mm;
-   }
-
-   p, h2, h3 {
-      orphans: 3; widows: 3;
-   }
-
-   h2, h3 {
-      page-break-after: avoid;
-   }
-}
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
 
 </head>
 
 <body>
+
+
+
+
+<h1 class="title toc-ignore">Uniform Manifold Approximation and Projection in R</h1>
+
+
+
 <style>
 h1.title {
   margin-top: 1em;
@@ -219,187 +88,171 @@ pre {
   line-height: 1.5;
 }
 </style>
-
+<div id="introduction" class="section level2">
 <h2>Introduction</h2>
-
-<p>Uniform Manifold Approximation and Projection (UMAP) is an algorithm for dimensional reduction proposed by <a href="https://arxiv.org/abs/1802.03426">McInnes and Healy</a>. This vignette demonstrates how to use the <code>umap</code> R package to perform dimensional reduction and visualization with the UMAP method.</p>
-
+<p>Uniform Manifold Approximation and Projection (UMAP) is an algorithm for dimensional reduction proposed by <a href="https://arxiv.org/abs/1802.03426">McInnes and Healy</a>.</p>
+<p>This vignette demonstrates how to use the <code>umap</code> R package to perform dimensional reduction and data trasnformations with the UMAP method. The vignette uses a small dataset as an example, but the package is suited to process larger data with many thousands of data points.</p>
+</div>
+<div id="usage" class="section level2">
 <h2>Usage</h2>
-
-<p>For a practical demonstration, let&#39;s use the Iris dataset. This dataset is accessible through object <code>iris</code>.</p>
-
-<pre><code class="r">head(iris, 3)
-</code></pre>
-
+<p>For a practical demonstration, let’s use the <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set">Iris dataset</a>, <code>iris</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(iris, <span class="dv">3</span>)</code></pre></div>
 <pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ## 1          5.1         3.5          1.4         0.2  setosa
 ## 2          4.9         3.0          1.4         0.2  setosa
-## 3          4.7         3.2          1.3         0.2  setosa
-</code></pre>
-
-<p>The first four columns contain data, the last column contains a label. It will be useful to 
-separate those components.</p>
-
-<pre><code class="r">iris.data = iris[, grep(&quot;Sepal|Petal&quot;, colnames(iris))]
-iris.labels = iris[, &quot;Species&quot;]
-</code></pre>
-
-<p>Now, let&#39;s load the <code>umap</code> package and apply the UMAP transformation.</p>
-
-<pre><code class="r">library(umap)
-iris.umap = umap(iris.data)
-</code></pre>
-
-<p>The output is here an object <code>iris.umap</code>. We can get a minimal summary of its contents by just printing it.</p>
-
-<pre><code class="r">iris.umap
-</code></pre>
-
+## 3          4.7         3.2          1.3         0.2  setosa</code></pre>
+<p>The first four columns contain data and the last column contains a label. It will be useful to separate those components.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris.data =<span class="st"> </span>iris[, <span class="kw">grep</span>(<span class="st">&quot;Sepal|Petal&quot;</span>, <span class="kw">colnames</span>(iris))]
+iris.labels =<span class="st"> </span>iris[, <span class="st">&quot;Species&quot;</span>]</code></pre></div>
+<div id="creating-a-projection" class="section level3">
+<h3>Creating a projection</h3>
+<p>Let’s now load the <code>umap</code> package and apply the UMAP transformation.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(umap)
+iris.umap =<span class="st"> </span><span class="kw">umap</span>(iris.data)</code></pre></div>
+<p>The output, <code>iris.umap</code>, is an object of class <code>umap</code>. We can get a minimal summary of its contents by just printing it.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris.umap</code></pre></div>
 <pre><code>## umap embedding of 150 items in 2 dimensions
-## object components: layout, knn, config
-</code></pre>
-
+## object components: layout, data, knn, config</code></pre>
 <p>The main component of the object is <code>layout</code>, which holds a matrix with coordinates.</p>
-
-<pre><code class="r">head(iris.umap$layout, 3)
-</code></pre>
-
-<pre><code>##           [,1]      [,2]
-## [1,] 2.3576047 -5.290552
-## [2,] 1.0353754 -7.342834
-## [3,] 0.9800537 -6.799518
-</code></pre>
-
-<p>We can now use these coordinates to visualize the dataset. (The custom plot function, <code>plot.iris</code>, is available at the end of this vignette.)</p>
-
-<pre><code class="r">plot.iris(iris.umap, iris.labels)
-</code></pre>
-
-<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-4"/></p>
-
-<p>The layout conveys separation between the groups and dispersion within the group. While this vignette example is simple by construction, the <code>umap</code> package can provide similar visualizations for larger datasets with many thousands of data points. </p>
-
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(iris.umap<span class="op">$</span>layout, <span class="dv">3</span>)</code></pre></div>
+<pre><code>##          [,1]       [,2]
+## [1,] 7.309792 -0.1064729
+## [2,] 9.869088  0.7831998
+## [3,] 9.394979  1.1357184</code></pre>
+<p>These coordinates can be used to visualize the dataset. (The custom plot function, <code>plot.iris</code>, is available at the end of this vignette.)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.iris</span>(iris.umap, iris.labels)</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="projecting-new-data" class="section level3">
+<h3>Projecting new data</h3>
+<p>Once we have a <code>umap</code> object describing a projection of one dataset into a low-dimensional layout, it becomes possible to project other data onto the same manifold.</p>
+<p>To perform the projection, we need a second dataset with the same data features as the training data. For this demonstration, let’s create such data by adding some noise to the original data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris.wnoise =<span class="st"> </span>iris.data <span class="op">+</span><span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">150</span><span class="op">*</span><span class="dv">40</span>, <span class="dv">0</span>, <span class="fl">0.1</span>), <span class="dt">ncol=</span><span class="dv">4</span>)
+<span class="kw">colnames</span>(iris.wnoise) =<span class="st"> </span><span class="kw">colnames</span>(iris.data)
+<span class="kw">head</span>(iris.wnoise, <span class="dv">3</span>)</code></pre></div>
+<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width
+## 1     5.183373    3.525821     1.515123   0.3285499
+## 2     4.872395    3.096451     1.467537   0.2094982
+## 3     4.664500    3.150872     1.421417   0.2190057</code></pre>
+<p>We can now request to arrange these perturbed observations onto the same layout as before. Following R’s design pattern for fitted models, this is performed via <code>predict</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris.wnoise.umap =<span class="st"> </span><span class="kw">predict</span>(iris.umap, iris.wnoise)
+<span class="kw">head</span>(iris.wnoise.umap, <span class="dv">3</span>)</code></pre></div>
+<pre><code>##       [,1]      [,2]
+## 1 7.520255 0.3247670
+## 2 9.790573 0.6060966
+## 3 9.111841 0.9088063</code></pre>
+<p>The output here is a matrix with coordinates. We can now visualize this new data alongside the original.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.iris</span>(iris.umap, iris.labels)
+<span class="kw">plot.iris</span>(iris.wnoise.umap, iris.labels, <span class="dt">add=</span>T, <span class="dt">pch=</span><span class="dv">4</span>,
+          <span class="dt">legend.suffix=</span><span class="st">&quot; (with noise)&quot;</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Note the new observations lie close to their original counterparts.</p>
+</div>
+</div>
+<div id="tuning-umap" class="section level2">
 <h2>Tuning UMAP</h2>
-
 <p>The example above uses function <code>umap</code> with a single argument - the input dataset - so the embedding is performed with default settings. However, the algorithm can be tuned in several ways. There are two strategies for tuning: via configuration objects and via additional arguments.</p>
-
+<div id="configuration-objects" class="section level3">
 <h3>Configuration objects</h3>
-
 <p>The default configuration object is called <code>umap.defaults</code>. This is a list encoding default values for all the parameters used within the algorithm.</p>
-
-<pre><code class="r">umap.defaults
-</code></pre>
-
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">umap.defaults</code></pre></div>
 <pre><code>## umap configuration parameters
-##            n.neighbors: 15
-##           n.components: 2
-##        metric.function: euclidean
-##               n.epochs: 200
+##            n_neighbors: 15
+##           n_components: 2
+##                 metric: euclidean
+##               n_epochs: 200
 ##                  input: data
 ##                   init: spectral
-##               min.dist: 0.1
-##       set.op.mix.ratio: 1
-##     local.connectivity: 1
+##               min_dist: 0.1
+##       set_op_mix_ratio: 1
+##     local_connectivity: 1
 ##              bandwidth: 1
 ##                  alpha: 1
 ##                  gamma: 1
-##   negative.sample.rate: 5
+##   negative_sample_rate: 5
 ##                      a: NA
 ##                      b: NA
 ##                 spread: 1
-##                   seed: NA
-##            knn.repeats: 1
+##           random_state: NA
+##        transform_state: NA
+##            knn_repeats: 1
 ##                verbose: FALSE
-</code></pre>
-
+##        umap_learn_args: NA</code></pre>
 <p>This object is a list with key-value pairs shown. To obtain some minimal information about each field, see the documentation in <code>help(umap.defaults)</code>, or see the original publication.</p>
-
-<p>To create a custom configuration, create a copy of the defaults and then update any of the fields. For example, let&#39;s change the seed for random number generation.</p>
-
-<pre><code class="r">custom.config = umap.defaults
-custom.config$seed = 123
-</code></pre>
-
+<p>To create a custom configuration, create a copy of the defaults and then update any of the fields. For example, let’s change the seed for random number generation.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">custom.config =<span class="st"> </span>umap.defaults
+custom.config<span class="op">$</span>random_state =<span class="st"> </span><span class="dv">123</span></code></pre></div>
 <p>We can observe the changed settings by inspecting the object again (try it). To perform the UMAP projection with these settings, we can run the projection again and pass the configuration object as a second argument.</p>
-
-<pre><code class="r">iris.umap.2 = umap(iris.data, custom.config)
-plot.iris(iris.umap.2, iris.labels,
-          main=&quot;Another UMAP visualization of the Iris dataset (different seed)&quot;)
-</code></pre>
-
-<p><img src="data:image/png;base64,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Jg5YbQ9yDMTRsbgN4sAkiYMdUnykaXCcAx/5Nk6ugzj6pOI4tQ7i6BNxQJFtEAdYc0AjDkg9tEEcveqgDeLoWds0iKNrxAGl8UaFOLpGHJCIAxJxQGtcB3H0j+MckIgDCkdIIREHJOJA3rNhG8TRM45zQGndBnF0rHUbxNGx1m0QR7+advFGHP1qXgdx9KvtNmUgjo613uMgjp4RByTigEQc0IgDBbxagcZxDvSJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIo5jXu6/H0McB7zexv9+D3Hs9/JaD+f7iGO/16/XQRz7ZeP4pUSIY7e4jdfwa3sfxLHLK9PGa5gr+Q3EsdUrk0UUx6/UQRwb6C5+c9eUONZa2QVx3M7qdQZx3MymLojjVm7bBnEsWwjhd9sgjmVLK4lMKq2H/CXEsURnMYfwoysP4lhU3qyMP1L5xTqIY9FSHNl1R+tBfwVxLFoTR351cnXEsYw1h0McEeKYEUdkXuir4/hc3HbYBxHHKqaDbBuFdUvTcR9DHOsstVHY8LQc9jHEsZVY7DqO69ZBHFsRR3bSuiO5ivxSL7RBHDeSLvWoBeK4sXipl9YaxHEz5RVHuY1LlUIcO0QLfXUb4wVXKYQ4Dlu9ObncpoY4jiu1IV/RtBnqNsRxnFxlFDc/TYa6DXEcJrcn4ixx3El5xaHqaDTYLYjjOLVKKMdxgTqI4zixtOVmhjjuZKEN4kCEOCAttUEc95VGcLk2iKOapTguUAdx1LK0VSGOG2OfA1qcAXFgthhH730QRzWL25XuVx/EUU9SwNXqII56dBy5KztEHPW4xf+KDqgTx82lq4lrbVeI4wSlNojj5ogD0kXbII4TXLUN4jjDNdMgjlMQByTigGZSIA4oV2qDOM52oTaI42zXSYM4TnehNojjdNdpgzigEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggbYkDt0MckFbHAfyPOCARByTigEQckP4FseG06CAy3QQAAAAASUVORK5CYII=" alt="plot of chunk custom2"/></p>
-
-<p>The result is slightly different due to a new instantiation of the random number generator.</p>
-
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris.umap.<span class="dv">2</span> =<span class="st"> </span><span class="kw">umap</span>(iris.data, custom.config)
+<span class="kw">plot.iris</span>(iris.umap.<span class="dv">2</span>, iris.labels,
+          <span class="dt">main=</span><span class="st">&quot;Another UMAP visualization (different seed)&quot;</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>The result is slightly different than before due to a new instantiation of the random number generator.</p>
+</div>
+<div id="additional-arguments" class="section level3">
 <h3>Additional arguments</h3>
-
 <p>Another way to customize the algorithm is to specify the non-default parameters explicitly. To achieve equivalent results to the above, we can thus use</p>
-
-<pre><code class="r">iris.umap.3 = umap(iris.data, seed=123)
-</code></pre>
-
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris.umap.<span class="dv">3</span> =<span class="st"> </span><span class="kw">umap</span>(iris.data, <span class="dt">random_state=</span><span class="dv">123</span>)</code></pre></div>
 <p>The coordinates in this new output object should match the ones from <code>iris.umap.2</code> (check it!)</p>
-
-<h2>Implementation</h2>
-
+</div>
+</div>
+<div id="implementations" class="section level2">
+<h2>Implementations</h2>
 <p>The package provides two implementations of the umap method, one written in R and one accessed via an external python module.</p>
-
-<p>The implementation written in R is the default. This implementation follows the design principles of the UMAP algorithm and its running time scales better-than-quadratically with the number of items (points) in a dataset. It is thus in principle suitable for use on datasets with thousands of points. However, it is not optimized for speed. It is the default because it should be functional without extensive dependencies and because its output provides insight into the inner workings of the algorithm.</p>
-
-<p>The second available implementation is a wrapper for a python module with the same name. To enable this implementation, specify the argument <code>method</code>,</p>
-
-<pre><code class="r">iris.umap.4 = umap(iris.data, method=&quot;python&quot;)
-</code></pre>
-
-<p>This command has several dependencies. To make it work, you must have the <code>reticulate</code> package installed and loaded (use <code>install.packages(&quot;reticulate&quot;)</code> and <code>library(reticulate)</code>). Furthermore, you must have the <code>umap-learn</code> python package installed (see the <a href="https://github.com/lmcinnes/umap">package repo</a> for instructions). If either of these components is not available, the above command will display an error message.</p>
-
-<p>Note that it will not be possible to produce exactly the same output from the two implementations due to inequivalent random number generators in R and python.</p>
-
-<p>&nbsp;</p>
-
+<p>The implementation written in R is the default. This implementation follows the design principles of the UMAP algorithm and its running time scales better-than-quadratically with the number of items (points) in a dataset. It is thus in principle suitable for use on datasets with thousands of points. It is the default because it should be functional without extensive dependencies.</p>
+<p>The second available implementation is a wrapper for a python package <code>umap-learn</code>. To enable this implementation, specify the argument <code>method</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris.umap.<span class="dv">4</span> =<span class="st"> </span><span class="kw">umap</span>(iris.data, <span class="dt">method=</span><span class="st">&quot;umap-learn&quot;</span>)</code></pre></div>
+<p>This command has several dependencies. You must have the <code>reticulate</code> package installed and loaded (use <code>install.packages(&quot;reticulate&quot;)</code> and <code>library(reticulate)</code>). Furthermore, you must have the <code>umap-learn</code> python package installed (see the <a href="https://github.com/lmcinnes/umap">package repo</a> for instructions). If either of these components is not available, the above command will display an error message.</p>
+<p>A separate vignette explains additional aspects of interfacing with <code>umap-learn</code>, including handling of discrepancies between releases.</p>
+<p>Note that it will not be possible to produce exactly the same output from the two implementations due to inequivalent random number generators in R and python, and due to slight discrepancies in the implementations.</p>
+<p> </p>
+</div>
+<div id="appendix" class="section level2">
 <h2>Appendix</h2>
-
 <p>The custom plot function used to visualize the Iris dataset:</p>
-
-<pre><code class="r">plot.iris
-</code></pre>
-
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot.iris</code></pre></div>
 <pre><code>## function(x, labels,
 ##          main=&quot;A UMAP visualization of the Iris dataset&quot;,
-##          pad=0.02, cex=0.65, pch=19,
+##          pad=0.1, cex=0.65, pch=19, add=FALSE, legend.suffix=&quot;&quot;,
 ##          cex.main=1, cex.legend=1) {
 ## 
-##   layout = x$layout
-##   par(mar=c(0.2,0.7,1.2,0.7), ps=10)
+##   layout = x
+##   if (class(x)==&quot;umap&quot;) {
+##     layout = x$layout
+##   } 
+##   
 ##   xylim = range(layout)
 ##   xylim = xylim + ((xylim[2]-xylim[1])*pad)*c(-0.5, 0.5)
-##   plot(xylim, xylim, type=&quot;n&quot;, axes=F, frame=F)
-##   xylim = par()$usr
-##   rect(xylim[1], xylim[1], xylim[2], xylim[2], border=&quot;#aaaaaa&quot;, lwd=0.2)
+##   if (!add) {
+##     par(mar=c(0.2,0.7,1.2,0.7), ps=10)
+##     plot(xylim, xylim, type=&quot;n&quot;, axes=F, frame=F)
+##     rect(xylim[1], xylim[1], xylim[2], xylim[2], border=&quot;#aaaaaa&quot;, lwd=0.25)  
+##   }
 ##   points(layout[,1], layout[,2], col=iris.colors[as.integer(labels)],
 ##          cex=cex, pch=pch)
 ##   mtext(side=3, main, cex=cex.main)
 ## 
 ##   labels.u = unique(labels)
-##   legend(&quot;topright&quot;, legend=as.character(labels.u),
+##   legend.pos = &quot;topright&quot;
+##   legend.text = as.character(labels.u)
+##   if (add) {
+##     legend.pos = &quot;bottomright&quot;
+##     legend.text = paste(as.character(labels.u), legend.suffix)
+##   }
+##   legend(legend.pos, legend=legend.text,
 ##          col=iris.colors[as.integer(labels.u)],
 ##          bty=&quot;n&quot;, pch=pch, cex=cex.legend)
 ## }
-## &lt;bytecode: 0x6a548c0&gt;
-</code></pre>
-
+## &lt;bytecode: 0x33e1438&gt;</code></pre>
 <p>Summary of R session:</p>
-
-<pre><code class="r">sessionInfo()
-</code></pre>
-
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
 <pre><code>## R version 3.4.1 (2017-06-30)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 16.04.4 LTS
 ## 
 ## Matrix products: default
 ## BLAS: /software/opt/R/R-3.4.1/lib/libRblas.so
-## LAPACK: /software/opt/anaconda/anaconda3-4.4.0/lib/libmkl_intel_lp64.so
+## LAPACK: /software/opt/R/R-3.4.1/lib/libRlapack.so
 ## 
 ## locale:
 ##  [1] LC_CTYPE=en_GB.UTF-8       LC_NUMERIC=C              
@@ -413,17 +266,28 @@ plot.iris(iris.umap.2, iris.labels,
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] umap_0.1.0.3
+## [1] umap_0.2.0.0
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] compiler_3.4.1   Matrix_1.2-12    magrittr_1.5     tools_3.4.1     
-##  [5] reticulate_1.8   Rcpp_0.12.17     codetools_0.2-15 stringi_1.2.2   
-##  [9] highr_0.6        grid_3.4.1       knitr_1.20       digest_0.6.15   
-## [13] jsonlite_1.5     stringr_1.3.1    lattice_0.20-35  evaluate_0.10.1
-</code></pre>
+##  [1] Rcpp_0.12.18    lattice_0.20-35 digest_0.6.15   rprojroot_1.3-2
+##  [5] RSpectra_0.13-1 grid_3.4.1      jsonlite_1.5    backports_1.1.2
+##  [9] magrittr_1.5    evaluate_0.10.1 stringi_1.2.2   Matrix_1.2-12  
+## [13] reticulate_1.9  rmarkdown_1.9   tools_3.4.1     stringr_1.3.1  
+## [17] yaml_2.1.19     compiler_3.4.1  htmltools_0.3.6 knitr_1.20</code></pre>
+<p> </p>
+</div>
 
-<p>&nbsp;</p>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 </body>
-
 </html>

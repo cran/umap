@@ -2,6 +2,106 @@
 ## functions to compute k nearest neighbors
 
 
+
+
+##' Compute knn information
+##'
+##' This function determines whether to obtain knn information using an exact
+##' brute force approach or using an approximate algorithm
+##'
+##' @keywords internal
+##' @param d data matrix
+##' @param config list with settings; relevant settings are as follows:
+##' input - "data" or "dist"
+##' n.neighbors - number of neighbors k
+##' metric.function - function with signature f(a, b)
+##' @param brute.force logical, during development, set FALSE to force stochastic knn
+##'
+##' @return list with at least two components, indexes and distances
+knn.info = function(d, config, brute.force=TRUE) {
+
+  if (config$input=="dist") {
+    return(knn.from.dist(d, config$n_neighbors))
+  } 
+  
+  distfun = config$metric.function
+
+  if (nrow(d)<2048 && brute.force) {
+    ## compute a distance matrix
+    V = nrow(d)
+    dT = t(d)
+    d.dist = matrix(0, ncol=V, nrow=V)
+    for (i in 1:(V-1)) {
+      d.dist[(i+1):V, i] = distfun(dT, i, (i+1):V)
+    }
+    d.dist = abs(d.dist + t(d.dist))
+    diag(d.dist) = -1
+    rownames(d.dist) = rownames(d)
+    ## compute neighbors from the distance matrix
+    result = knn.from.dist(d.dist, config$n_neighbors)
+    result$distances[,1] = 0
+  } else {
+    result = knn.from.data.reps(d, config$n_neighbors, distfun, reps=config$knn_repeats)
+  }
+
+  class(result) = "umap.knn"
+  result
+}
+
+
+##' compute knn information for spectators relative to data
+##'
+##' @keywords internal
+##' @param spectators matrix with data for spectators
+##' @param d matrix with primary data
+##' @param config list with settings
+##' @param brute.force logical, during developemnt, set FALSE to force stochastic knn
+##'
+##' @return list with at least two components, indexes and distances
+spectator.knn.info = function(spectators, d, config, brute.force=TRUE) {
+  
+  distfun = config$metric.function
+  Vd = nrow(d)
+  Vdseq = 1:Vd
+  Vs = nrow(spectators)
+  k = config$n_neighbors
+  
+  ## create a joint dataset with both primary and spectator data
+  alldata = cbind(t(d), t(spectators))
+  
+  if (nrow(spectators)<1024 && brute.force) {
+    ## compute distances from spectators to data
+    d.dist = matrix(0, ncol=Vd, nrow=Vs)
+    rownames(d.dist) = rownames(spectators)
+    for (i in 1:nrow(spectators)) {
+      ## compute from the ith spectator to all the 
+      d.dist[i, ] = distfun(alldata, Vd+i, Vdseq)
+    }
+    result = knn.from.dist(d.dist, k)
+    ## adjust result to let each item be closest to itself
+    result$indexes[, 2:k] = result$indexes[,1:(k-1),drop=FALSE]
+    result$distances[, 2:k] = result$distances[,1:(k-1),drop=FALSE]
+    result$indexes[,1] = Vd+(1:Vs)
+    result$distances[,1] = 0
+  } else {
+    ## generate knn using a stochastic algorithm
+    result = knn.from.data(alldata, k, distfun, fix.observations=Vd)
+    ## reduce result to just the knn components
+    result$indexes = result$indexes[Vd+(1:Vs), ]
+    result$distances = result$distances[Vd+(1:Vs),]
+  }
+  
+  class(result) = "umap.knn"
+  result
+}
+
+
+
+
+## ############################################################################
+## Specific implementations
+
+
 ##' get information about k nearest neighbors from a distance object or from a matrix
 ##' with distances
 ##'
@@ -26,26 +126,20 @@ knn.from.dist = function(d, k) {
   }
   
   k = floor(k)
-  if (k > nrow(d)) {
+  if (k > ncol(d)) {
     umap.error("number of neighbors must be smaller than number of items")
   }
   if (k<=1) {
     umap.error("number of neighbors must be greater than 1")
   }
   
-  ## ensure that only self-distances have zero values
-  dtemp = d+1
-  diag(dtemp) = 0
-  
-  ## get indexes of nearest neighbors (look for one more, which will be self)
-  items = 1:nrow(d)
-  indeces = apply(dtemp, 1, function(x) {
+  ## get indexes of nearest neighbors 
+  items = 1:ncol(d)
+  indexes = t(apply(d, 1, function(x) {
     items[order(x)][1:k]
-  })
-  ## make vertical, ignore the index of self
-  indexes = t(indeces)
-
-  ## copy distances from initial d
+  }))
+  
+  ## extract a subset of the distances
   distances = matrix(0, ncol=k, nrow=nrow(d))
   for (i in 1:nrow(d)) {
     distances[i, ] = d[i, indexes[i, ]]
@@ -67,25 +161,26 @@ knn.from.dist = function(d, k) {
 ##' This is a rough implementation and improvements are possible.
 ##'
 ##' @keywords internal
-##' @param d matrix with data
+##' @param dT matrix with data (observations in columns, features in rows)
 ##' @param k integer, number of neighbors
-##' @param metric.function function with signature f(a, b) that returns a metric distance
+##' @param metric.function function that returns a metric distance
 ##' @param subsample.k numeric, used for internal tuning of implementation
+##' @param fix.observations integer, number of observations in dT that will appear in knn
 ##'
 ##' @return list with two components;
 ##' indexes - identifies, for each point in dataset, the set of k neighbors
 ##' distances - provides distances from each point to those neighbors
 ##' num.computed - for diagnostics only, gives the number of distances computed internally
 ##' avg.
-knn.from.data = function(d, k, metric.function, subsample.k=0.5) {
+knn.from.data = function(dT, k, metric.function, subsample.k=0.5, fix.observations=NULL) {
 
   ## number of vertices, i.e. items in dataset
-  V = nrow(d)
+  V = ncol(dT)
   ## number of neighbors
   k = floor(k)
 
   if (!is.finite(k) | k>V | k<=1) {
-    umap.error("k must be greater than 1 and smaller than the number of items")
+    umap.error("k must be finite, greater than 1, and smaller than the number of items")
   }
   if (!is.finite(subsample.k) | subsample.k<0 | subsample.k>k) {
     umap.error("subsample.k must be finite, >0, <k")
@@ -96,14 +191,15 @@ knn.from.data = function(d, k, metric.function, subsample.k=0.5) {
   if (subsample.k<1) {
     subsample.k = min(V-1, max(4, ceiling(k*subsample.k)))
   }
-  if (subsample.k>nrow(d)) {
-    umap.error("subsample.k is too large")
-  }
   
-  ## some preset series
+  ## Vseq is a set of observations to link to (targets)
   Vseq = 1:V
+  if (!is.null(fix.observations)) {
+    Vseq = 1:fix.observations
+  }
+  ## kseq is to select first-k items in a list
   kseq = 1:k
-  Vkseq = rep(Vseq, each=k)
+  Vkseq = rep(1:V, each=k)
   subsample.ratio = subsample.k/k
   
   ## internal helper; creates a set of (neighbor-1) indexes that does not include x
@@ -123,16 +219,21 @@ knn.from.data = function(d, k, metric.function, subsample.k=0.5) {
   ## create a neighborhoods using a list
   ## each element will be a matrix. Col 1 -> indexes to neighbors, Col2 -> distances 
   B = lapply(as.list(1:V), function(i) {
-    neighbors = c(i, pick.random.k(i))
+    neighbors = pick.random.k(i)
+    neighbor.distances = metric.function(dT, i, neighbors)
     ## create matrix with indexes to neighbors and distances
     ## set distance to self as -1; this ensures that self is always rank 1 
-    result = matrix(c(neighbors, -1, metric.function(d[neighbors,])), ncol=2)
+    result = matrix(c(i, neighbors, -1, neighbor.distances), ncol=2)
     result[order(result[,2]),]
   })
   ## create reverse neighborhoods
   make.revB = function() {
     result = unlist(lapply(B, function(x) { x[kseq,1]}))
-    split(Vkseq, result)
+    result = split(Vkseq, result)
+    if (!is.null(fix.observations)) {
+      result = lapply(result, function(x) { x[x<=fix.observations] })
+    }
+    result
   }
   
   ## get indeces of neighbors for an index or a set of indeces
@@ -145,7 +246,7 @@ knn.from.data = function(d, k, metric.function, subsample.k=0.5) {
     c(b.set, rev.set)
   }
 
-  ## keep track of 
+  ## keep track of what neighbors have been checked 
   checked = lapply(B, function(x) {x[,1]} )
   
   ## helper; starts with a working matrix and suggests better neighbors
@@ -164,7 +265,7 @@ knn.from.data = function(d, k, metric.function, subsample.k=0.5) {
     }
     ## compute distances to the candidates, but return only the good ones
     checked[[i]] <<- c(already.checked, selection)
-    result = matrix(c(selection, metric.function(d[c(i, selection),])), ncol=2)
+    result = matrix(c(selection, metric.function(dT, i, selection)), ncol=2)
     result[result[,2] < mat[k,2], , drop=FALSE]
   }
 
@@ -200,10 +301,11 @@ knn.from.data = function(d, k, metric.function, subsample.k=0.5) {
   distances = do.call(rbind, distances)
   ## by definition, distances to self are zero
   distances[,1] = 0
-  rownames(indexes) = rownames(distances) = rownames(d)
+  rownames(indexes) = rownames(distances) = colnames(dT)
   
   list(indexes=indexes, distances=distances)
 }
+
 
 
 
@@ -212,15 +314,18 @@ knn.from.data = function(d, k, metric.function, subsample.k=0.5) {
 ##' @keywords internal
 ##' @param d matrix with data
 ##' @param k integer, number of neighbors
-##' @param metric.function function with signature f(a, b) that returns a metric distance
+##' @param metric.function function that returns a metric distance
 ##' @param subsample.k numeric, used for internal tuning of implementation
 ##' @param reps integer, number of repeats to carry out
 ##'
 ##' @return list of same format as knn.from.data
 knn.from.data.reps = function(d, k, metric.function, subsample.k=0.5, reps=2) {
 
+  V = nrow(d)
+  dT = t(d)
+  
   ## generate an initial knn
-  result = knn.from.data(d, k, metric.function, subsample.k)
+  result = knn.from.data(dT, k, metric.function, subsample.k)
 
   reps = ceiling(reps)
   if (reps<2) {
@@ -228,10 +333,9 @@ knn.from.data.reps = function(d, k, metric.function, subsample.k=0.5, reps=2) {
   }
   
   ## perform more knn, keep best results
-  V = nrow(d)
   for (rr in 2:reps) {
     counter = 0
-    newresult = knn.from.data(d, k, metric.function, subsample.k)
+    newresult = knn.from.data(dT, k, metric.function, subsample.k)
     for (i in 1:V) {
       nowdist = sum(result$distances[i,])
       newdist = sum(newresult$distances[i,])
@@ -245,4 +349,5 @@ knn.from.data.reps = function(d, k, metric.function, subsample.k=0.5, reps=2) {
 
   result
 }
+
 

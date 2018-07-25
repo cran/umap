@@ -27,8 +27,7 @@ NULL
 ## but gain additional functionality when those components are present
 python.umap = NULL
 .onLoad = function(libname, pkgname) {
-  has.reticulate = suppressWarnings(suppressMessages(requireNamespace("reticulate")))
-  if (has.reticulate) {
+  if (suppressWarnings(suppressMessages(requireNamespace("reticulate")))) {
     has.pkg.umap = reticulate::py_module_available("umap")
     if (has.pkg.umap) {
       ## assignment in parent environment!
@@ -45,20 +44,20 @@ python.umap = NULL
 ##' A list with parameters customizing a UMAP embedding. Each component of the
 ##' list is an effective argument for umap().
 ##'
-##' n.neighbors: integer; number of nearest neighbors
+##' n_neighbors: integer; number of nearest neighbors
 ##'
-##' n.components: integer; dimension of target (output) space
+##' n_components: integer; dimension of target (output) space
 ##'
-##' metric.function: character or function; determines how distances between
+##' metric: character or function; determines how distances between
 ##' data points are computed. When using a string, available metrics are:
 ##' euclidean, manhattan. Other availble generalized metrics are: cosine,
 ##' pearson, pearson2. Note the triangle inequality may not be satisfied by
 ##' some generalized metrics, hence knn search may not be optimal.
 ##' When using metric.function as a function, the signature must be
-##' function(matrix) and should compute a distance between the first row
-##' and all subsequent rows.
+##' function(matrix, origin, target) and should compute a distance between
+##' the origin column and the target columns
 ##'
-##' n.epochs: integer; number of iterations performed during
+##' n_epochs: integer; number of iterations performed during
 ##' layout optimization
 ##'
 ##' input: character, use either "data" or "dist"; determines whether the primary
@@ -70,12 +69,12 @@ python.umap = NULL
 ##' This setting.can also be set to a matrix, in which case layout optimization
 ##' begins from the provided coordinates.
 ##'
-##' min.dist: numeric; determines how close points appear in the final layout
+##' min_dist: numeric; determines how close points appear in the final layout
 ##'
-##' set.op.mix.ratio: numeric in range [0,1]; determines who the knn-graph
+##' set_op_ratio_mix_ratio: numeric in range [0,1]; determines who the knn-graph
 ##' is used to create a fuzzy simplicial graph
 ##'
-##' local.connectivity: numeric; used during construction of fuzzy simplicial set
+##' local_connectivity: numeric; used during construction of fuzzy simplicial set
 ##'
 ##' bandwidth: numeric; used during construction of fuzzy simplicial set
 ##'
@@ -83,7 +82,7 @@ python.umap = NULL
 ##'
 ##' beta: numeric; determines, together with alpha, the learning rate of layout optimization
 ##'
-##' negative.sample.rate: integer; determines how many non-neighbor points are
+##' negative_sample_rate: integer; determines how many non-neighbor points are
 ##' used per point and per iteration during layout optimization
 ##'
 ##' a: numeric; contributes to gradient calculations during layout optimization.
@@ -94,42 +93,48 @@ python.umap = NULL
 ##'
 ##' spread: numeric; used during automatic estimation of a/b parameters.
 ##'
-##' seed: integer; seed for random number generation
+##' random_state: integer; seed for random number generation used during umap()
+##'
+##' transform_state: integer; seed for random number generation used during predict()
 ##'
 ##' knn.repeat: number of times to restart knn search
 ##'
 ##' verbose: logical or integer; determines whether to show progress messages
 ##'
+##' umap_learn_args: vector of arguments to python package umap-learn
+##'
 ##' @examples
 ##' # display all default settings
 ##' umap.defaults
 ##'
-##' # create a new settings object with n.neighbors set to 5
+##' # create a new settings object with n_neighbors set to 5
 ##' custom.settings = umap.defaults
-##' custom.settings$n.neighbors = 5
+##' custom.settings$n_neighbors = 5
 ##' custom.settings
 ##' 
 ##' @export
 umap.defaults = list(
-  n.neighbors=15,
-  n.components=2,
-  metric.function="euclidean",
-  n.epochs=200,
+  n_neighbors=15,
+  n_components=2,
+  metric="euclidean",
+  n_epochs=200,
   input="data",
   init="spectral",
-  min.dist=0.1,
-  set.op.mix.ratio=1,
-  local.connectivity=1,
+  min_dist=0.1,
+  set_op_mix_ratio=1,
+  local_connectivity=1,
   bandwidth=1.0,
   alpha=1,
   gamma=1.0,
-  negative.sample.rate=5,
+  negative_sample_rate=5,
   a=NA,
   b=NA,
   spread=1,
-  seed=NA,
-  knn.repeats=1,
-  verbose=FALSE
+  random_state=NA,
+  transform_state=NA,
+  knn_repeats=1,
+  verbose=FALSE,
+  umap_learn_args = NA
 )
 class(umap.defaults) = "umap.config"
 
@@ -141,17 +146,16 @@ class(umap.defaults) = "umap.config"
 ##' @param d matrix, input data
 ##' @param config object of class umap.config
 ##' @param method character, implementation. Available methods are 'naive'
-##' (an implementation written in pure R) and 'python' (requires python package
-##' 'umap-learn')
+##' (an implementation written in pure R) and 'umap-learn' (requires python
+##' package 'umap-learn')
 ##' @param ... list of settings; overwrite default values from config
 ##'
 ##' @return object of class umap, containing at least a component
 ##' with an embedding and a component with configuration settings
 ##'
 ##' @examples
-##' # embedd iris dataset
-##' # (using default settings, but with reduced number of epochs)
-##' iris.umap = umap(iris[,1:4], n.epochs=20)
+##' # embedd iris dataset using default settings
+##' iris.umap = umap(iris[,1:4])
 ##'
 ##' # display object summary
 ##' iris.umap
@@ -160,7 +164,7 @@ class(umap.defaults) = "umap.config"
 ##' head(iris.umap$layout)
 ##'
 ##' @export
-umap = function(d, config=umap.defaults, method=c("naive", "python"), ...) {
+umap = function(d, config=umap.defaults, method=c("naive", "umap-learn"), ...) {
   
   ## prep - check inputs, configuration settings
   method = config$method = match.arg(method)
@@ -168,34 +172,80 @@ umap = function(d, config=umap.defaults, method=c("naive", "python"), ...) {
   d = umap.prep.input(d, config)
 
   ## save existing RNG seed, set "internal" seed
-  if (exists(".Random.seed", envir=.GlobalEnv)) {
-    old.seed = .Random.seed
-  } else {
-    old.seed = NA
-  }
-  if (!is.na(config$seed)) {
-    set.seed(config$seed)
+  old.seed = get.global.seed()
+  if (!is.na(config$random_state)) {
+    set.seed(config$random_state)
   }
   
   ## perform the actual work with a specific umap implementation
   if (nrow(d)<=2) {
     result = umap.small(d, config)
   } else {
-    implementations = c(naive=umap.naive, python=umap.python)
+    implementations = c(naive=umap.naive,
+                        "umap-learn"=umap.learn)
     if (method %in% names(implementations)) {
       result = implementations[[method]](d, config)
     } 
-  }
-  
-  ## add a record of configuration into the result
-  result[["config"]] = config
+  }  
   class(result) = "umap"
   
-  ## restore old seed
-  if (length(old.seed)>1) {
-    assign(".Random.seed", old.seed, envir=.GlobalEnv)
-  }
-  
+  ## restore state and finish
+  set.global.seed(old.seed)
   result
 }
 
+
+
+
+##' project data points onto an existing umap embedding
+##'
+##' @param object trained object of class umap
+##' @param data matrix with data
+##' @param ... additional arguments (not used)
+##'
+##' @return new matrix
+##'
+##' @examples
+##' # embedd iris dataset using default settings
+##' iris.umap = umap(iris[,1:4])
+##'
+##' # create a dataset with structure like iris, but with perturbation
+##' iris.perturbed = iris[,1:4] + matrix(rnorm(nrow(iris)*4, 0, 0.1), ncol=4)
+##'
+##' # project perturbed dataset
+##' perturbed.embedding = predict(iris.umap, iris.perturbed)
+##'
+##' # output is a matrix with embedding coordinates
+##' head(perturbed.embedding)
+##'
+##' @export
+predict.umap = function(object, data, ...) {
+
+  umap.check.config.class(object$config)
+  if (object$config$input == "dist") {
+    umap.error("predict cannot work from object fitted by input='dist'")
+  }
+  if (nrow(object$layout)<=2) {
+    umap.error("predict cannot work when too-small initial training set")
+  }
+
+  old.seed = get.global.seed()
+  if (!is.na(object$config$transform_state)) {
+    set.seed(object$config$transform_state)
+  }
+  
+  ## extract method from the umap object
+  method = object$config$method
+  implementations = c(naive=umap.naive.predict,
+                      "umap-learn"=umap.learn.predict)
+  if (!method %in% names(implementations)) {
+    umap.error("unknown prediction method")
+  }
+  
+  ## carry out the predictions
+  result = implementations[[method]](object, data)
+
+  ## restore state and finish
+  set.global.seed(old.seed)
+  result
+}
