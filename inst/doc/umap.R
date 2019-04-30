@@ -2,10 +2,9 @@
 ## block with some startup/background objects functions
 library(umap)
 
-iris.colors = c("#1f77b4", "#d62728", "#7f7f7f")
-iris.colors = c("#ff7f00", "#e377c2", "#17becf")
 plot.iris = function(x, labels,
          main="A UMAP visualization of the Iris dataset",
+         colors=c("#ff7f00", "#e377c2", "#17becf"),
          pad=0.1, cex=0.65, pch=19, add=FALSE, legend.suffix="",
          cex.main=1, cex.legend=1) {
 
@@ -21,7 +20,7 @@ plot.iris = function(x, labels,
     plot(xylim, xylim, type="n", axes=F, frame=F)
     rect(xylim[1], xylim[1], xylim[2], xylim[2], border="#aaaaaa", lwd=0.25)  
   }
-  points(layout[,1], layout[,2], col=iris.colors[as.integer(labels)],
+  points(layout[,1], layout[,2], col=colors[as.integer(labels)],
          cex=cex, pch=pch)
   mtext(side=3, main, cex=cex.main)
 
@@ -33,7 +32,7 @@ plot.iris = function(x, labels,
     legend.text = paste(as.character(labels.u), legend.suffix)
   }
   legend(legend.pos, legend=legend.text,
-         col=iris.colors[as.integer(labels.u)],
+         col=colors[as.integer(labels.u)],
          bty="n", pch=pch, cex=cex.legend)
 }
 
