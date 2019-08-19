@@ -90,6 +90,12 @@ plot.iris(iris.umap.2, iris.labels,
 ## ----custom3, eval=FALSE-------------------------------------------------
 #  iris.umap.3 = umap(iris.data, random_state=123)
 
+## ---- eval=TRUE----------------------------------------------------------
+# predict in batch, display first item
+predict(iris.umap, iris.wnoise)[1, , drop=FALSE]
+# predict only first item
+predict(iris.umap, iris.wnoise[1,,drop=FALSE])
+
 ## ---- eval=FALSE---------------------------------------------------------
 #  iris.umap.4 = umap(iris.data, method="umap-learn")
 

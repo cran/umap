@@ -31,6 +31,7 @@ library(umap)
 iris.data = iris[, grep("Sepal|Petal", colnames(iris))]
 
 ## ----umap.learn, eval=FALSE----------------------------------------------
+#  library(reticulate)
 #  iris.umap_learn = umap(iris.data, method="umap-learn")
 
 ## ----defaults, eval=FALSE------------------------------------------------
