@@ -1,4 +1,4 @@
-a3f2a48d56f68923368ef49d2003fe43 *DESCRIPTION
+1efdd2cd91f7e3e73c25da52b59c839f *DESCRIPTION
 b13efd204a1b35ca2ec2cf08a086774d *LICENSE
 0194440e3682318a2f75525076ed0d23 *NAMESPACE
 713320817562c43eaf81f3e4bc5467e7 *R/RcppExports.R
@@ -17,10 +17,10 @@ b23b3214202c35e3301a6aa8e7bed58f *R/utils.R
 66c769973aa4cbde9fbc089cdb96b202 *build/vignette.rds
 883637513ac3580e8d769bdabcdfcfcb *inst/doc/umap.R
 65295f69d4a8359158768feb25cc8ee3 *inst/doc/umap.Rmd
-7099b334f2ada42c963710a258d7d050 *inst/doc/umap.html
+bd284b760b16ae41d513705058ce0835 *inst/doc/umap.html
 a4c153d3fb221ccab05c8caa37f59a56 *inst/doc/umap_learn.R
 ff777942e5d2770949f63c6cf6a71412 *inst/doc/umap_learn.Rmd
-459067585a4224bb5db1152ba0e96d2e *inst/doc/umap_learn.html
+8a2a4169e25aa2e61e8770b0717417ea *inst/doc/umap_learn.html
 f523dde3901321994d24ab1778c70c5f *man/add.coo.Rd
 2b3c31831d3f1454a1bbe6a0667cf4af *man/center.embedding.Rd
 30c28924574bebfb53711867b9118ad6 *man/check.compatible.coo.Rd
@@ -90,14 +90,14 @@ d0041ce5672c1537a76642f1f1496202 *src/RcppExports.cpp
 456cce49a4272e153ec5e734a96fd0bb *src/distances.cpp
 2c92124ea147726a73bdcb22c9ffbac2 *src/optimize.cpp
 dc8e63f678524300f48718b1bd45e231 *tests/testthat.R
-de7aa0ac24bbd7c05a16b8712a13e53b *tests/testthat/synthetic.R
+99d32b3a9d49df5236f684637ef176d0 *tests/testthat/synthetic.R
 60f78593ea312ac8b8e8997332c2c6c6 *tests/testthat/test_checks.R
 1c20d06a295403cdfd88d3c673b66fea *tests/testthat/test_config.R
 568054f7d00cf05ef7c15d38baaccc6c *tests/testthat/test_coo.R
 abbf61493e904aa6145fc66272d58187 *tests/testthat/test_embedding.R
 1e7cafd2bca77712f8d03d347e67aa98 *tests/testthat/test_knn.R
 7beb5e706891299c2120f026d90fed32 *tests/testthat/test_methods.R
-3b7aeea7167e632dfcc5f16aadaf4116 *tests/testthat/test_naive.R
+59eddeb920c7d1425a0ce071fe1b2598 *tests/testthat/test_naive.R
 c977c87281e780e7afd7c8a559f5cf90 *tests/testthat/test_predict.R
 6d6cded473c9481399ca35dbaed74bc5 *tests/testthat/test_print.R
 cf04bf9ecab418b5daa8838033767145 *tests/testthat/test_python.R

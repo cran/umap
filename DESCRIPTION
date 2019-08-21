@@ -1,6 +1,6 @@
 Package: umap
 Title: Uniform Manifold Approximation and Projection
-Version: 0.2.3
+Version: 0.2.3.1
 Authors@R: 
     person("Tomasz", "Konopka", , "tokonopka@gmail.com", role = c("aut", "cre"))
 Author: Tomasz Konopka [aut, cre]
@@ -23,6 +23,6 @@ Suggests: knitr, rmarkdown, testthat
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
 NeedsCompilation: yes
-Packaged: 2019-08-18 08:15:53 UTC; tkonopka
+Packaged: 2019-08-21 05:27:37 UTC; tkonopka
 Repository: CRAN
-Date/Publication: 2019-08-19 18:50:02 UTC
+Date/Publication: 2019-08-21 12:40:08 UTC
