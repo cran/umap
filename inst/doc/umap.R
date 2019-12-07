@@ -9,7 +9,7 @@ plot.iris = function(x, labels,
          cex.main=1, cex.legend=1) {
 
   layout = x
-  if (class(x)=="umap") {
+  if (is(x, "umap")) {
     layout = x$layout
   } 
   

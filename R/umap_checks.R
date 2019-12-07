@@ -2,7 +2,6 @@
 # functions for argument checking
 
 
-
 #' Validator functions for umap settings
 #'
 #' @keywords internal
@@ -73,7 +72,6 @@ umap.check.config = function(config=umap.defaults, ...) {
   if (config$min_dist <=0) {
     umap.error("setting 'min_dist' must be > 0")
   }
-
   
   # force some data types
   for (x in c("n_epochs", "n_neighbors", "n_components",
@@ -82,7 +80,7 @@ umap.check.config = function(config=umap.defaults, ...) {
   }
   
   # always give a metric name
-  if (class(config$metric)=="function") {
+  if (is(config$metric, "function")) {
     config$metric.function = config$metric
     config$metric = "custom"
   } else {
@@ -101,7 +99,6 @@ umap.check.config = function(config=umap.defaults, ...) {
     }
   }
   
-  # return prepared configuration
   config
 }
 
@@ -140,8 +137,6 @@ umap.prep.input = function(d, config) {
 }
 
 
-
-
 #' stop execution with a custom error message
 #'
 #' @keywords internal
@@ -167,7 +162,7 @@ umap.warning = function(...) {
 #' @keywords internal
 #' @param config list with arguments (object of class umap.config)
 umap.check.config.class = function(config) {
-  if (class(config)!="umap.config") {
+  if (!is(config, "umap.config")) {
     umap.error("config is absent or corrupt")
   }
 }

@@ -18,41 +18,67 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 
 </style>
 <script>
@@ -79,7 +105,189 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 
-<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 
 
@@ -131,55 +339,55 @@ body {
 <div id="usage" class="section level2">
 <h2>Usage</h2>
 <p>For a practical demonstration, let’s use the <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set">Iris dataset</a>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(iris, <span class="dv">3</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">head</span>(iris, <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ## 1          5.1         3.5          1.4         0.2  setosa
 ## 2          4.9         3.0          1.4         0.2  setosa
 ## 3          4.7         3.2          1.3         0.2  setosa</code></pre>
 <p>The first four columns contain data and the last column contains a label. It will be useful to separate those components.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris.data =<span class="st"> </span>iris[, <span class="kw">grep</span>(<span class="st">&quot;Sepal|Petal&quot;</span>, <span class="kw">colnames</span>(iris))]
-iris.labels =<span class="st"> </span>iris[, <span class="st">&quot;Species&quot;</span>]</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">iris.data =<span class="st"> </span>iris[, <span class="kw">grep</span>(<span class="st">&quot;Sepal|Petal&quot;</span>, <span class="kw">colnames</span>(iris))]</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">iris.labels =<span class="st"> </span>iris[, <span class="st">&quot;Species&quot;</span>]</a></code></pre></div>
 <div id="creating-a-projection" class="section level3">
 <h3>Creating a projection</h3>
 <p>Let’s now load the <code>umap</code> package and apply the UMAP transformation.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(umap)
-iris.umap =<span class="st"> </span><span class="kw">umap</span>(iris.data)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(umap)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">iris.umap =<span class="st"> </span><span class="kw">umap</span>(iris.data)</a></code></pre></div>
 <p>The output, <code>iris.umap</code>, is an object of class <code>umap</code>. We can get a minimal summary of its contents by just printing it.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris.umap</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">iris.umap</a></code></pre></div>
 <pre><code>## umap embedding of 150 items in 2 dimensions
 ## object components: layout, data, knn, config</code></pre>
 <p>The main component of the object is <code>layout</code>, which holds a matrix with coordinates.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(iris.umap<span class="op">$</span>layout, <span class="dv">3</span>)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">head</span>(iris.umap<span class="op">$</span>layout, <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>##          [,1]      [,2]
 ## [1,] 15.95804 -1.418806
 ## [2,] 17.80407 -1.531492
 ## [3,] 17.59992 -2.239721</code></pre>
 <p>These coordinates can be used to visualize the dataset. (The custom plot function, <code>plot.iris</code>, is available at the end of this vignette.)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.iris</span>(iris.umap, iris.labels)</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">plot.iris</span>(iris.umap, iris.labels)</a></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
 </div>
 <div id="projecting-new-data" class="section level3">
 <h3>Projecting new data</h3>
 <p>Once we have a <code>umap</code> object describing a projection of a dataset into a low-dimensional layout, we can project other data onto the same manifold.</p>
 <p>To perform the projection, we need a second dataset with the same data features as the training data. For this demonstration, let’s create such data by adding some noise to the original data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris.wnoise =<span class="st"> </span>iris.data <span class="op">+</span><span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">150</span><span class="op">*</span><span class="dv">40</span>, <span class="dv">0</span>, <span class="fl">0.1</span>), <span class="dt">ncol=</span><span class="dv">4</span>)
-<span class="kw">colnames</span>(iris.wnoise) =<span class="st"> </span><span class="kw">colnames</span>(iris.data)
-<span class="kw">head</span>(iris.wnoise, <span class="dv">3</span>)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">iris.wnoise =<span class="st"> </span>iris.data <span class="op">+</span><span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">150</span><span class="op">*</span><span class="dv">40</span>, <span class="dv">0</span>, <span class="fl">0.1</span>), <span class="dt">ncol=</span><span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">colnames</span>(iris.wnoise) =<span class="st"> </span><span class="kw">colnames</span>(iris.data)</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw">head</span>(iris.wnoise, <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width
 ## 1     5.183373    3.525821     1.515123   0.3285499
 ## 2     4.872395    3.096451     1.467537   0.2094982
 ## 3     4.664500    3.150872     1.421417   0.2190057</code></pre>
 <p>We can now arrange these perturbed observations onto the same layout as before. Following R’s design pattern for fitted models, this is performed via <code>predict</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris.wnoise.umap =<span class="st"> </span><span class="kw">predict</span>(iris.umap, iris.wnoise)
-<span class="kw">head</span>(iris.wnoise.umap, <span class="dv">3</span>)</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">iris.wnoise.umap =<span class="st"> </span><span class="kw">predict</span>(iris.umap, iris.wnoise)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">head</span>(iris.wnoise.umap, <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>##       [,1]      [,2]
 ## 1 15.30520 -1.921424
 ## 2 18.09914 -1.361412
 ## 3 17.47446 -2.782222</code></pre>
 <p>The output is a matrix with coordinates. We can visualize these points alongside the original.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.iris</span>(iris.umap, iris.labels)
-<span class="kw">plot.iris</span>(iris.wnoise.umap, iris.labels, <span class="dt">add=</span>T, <span class="dt">pch=</span><span class="dv">4</span>,
-          <span class="dt">legend.suffix=</span><span class="st">&quot; (with noise)&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">plot.iris</span>(iris.umap, iris.labels)</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw">plot.iris</span>(iris.wnoise.umap, iris.labels, <span class="dt">add=</span>T, <span class="dt">pch=</span><span class="dv">4</span>,</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3">          <span class="dt">legend.suffix=</span><span class="st">&quot; (with noise)&quot;</span>)</a></code></pre></div>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAhwAAAIcCAMAAACKIIdOAAAAElBMVEUAAAAXvs+qqqrjd8L/fwD///+43GPAAAAACXBIWXMAABcRAAAXEQHKJvM/AAATUUlEQVR4nO2d66KyKhgG8TPv/5b3XilnHsRSoZr5kSdEV8yCVxQzC4DA9D4BGBfkAAlygAQ5QIIcIEEOkCAHSJADJMgBEuQACXKABDlAghwgQQ6QIAdIusthgjMwwdStz2bMkzyj+mFUCrO/b3YitV1MYU4k2D1u78LpfvxmOUwsR3biyHE6/Y8v5ViXvBOLiVIdO3OZuj0bE83sy9GQADl2jm/y/7X13zyXw4SpXD2yfW5T4+sI41e4msNVOzbluhAeyixxxWRXhzVXlCpKbtypmmzbM4/grOJJNlNsPe+ksxxmXw5XcmU5bBkERR/IYexuUbPyXBls8OUY+WMTB34tcWoTHjQ4d3cShazSswqW0hz7/+d2P7yUw/4fJymdLMFOJkgQyRHu6vZIN/ggZy26KHu/LTpNJ0zBHJPnHmVV2Bydffxn9GMEOeJv3a5136VJUmb/2Ussh5vG2fkqJy7IaCYyK8kqkaOcPJE4+nrLZ5UvJVn3o+/x43/S9HsLJmHK5GLF/rNv9XGQUShDSY64WXlZjkKz4ufyi7H0rMIvYktBs/I8ev7F2qkv8rS6SE85rDWKAWksR1gCbrdwn9fkyCuE8ITSrOLzdH9ZFPSYzoUzvBxR1N8gx+JrEedX3Kw4N6KVS7hPdi51ObKzSXPIsjL5GeVnX/hL76br8cOCCmf8d+fmkiKNc8lKOi65ohxLssubckQbk31yOfLN+uw7MqIcQVm3yLEIObLrgiCjkhwm3Cf+vy9drdjZ0tVKPJdltSdHbEk/+sqRnkTSeKThQvIf7PcKdrAdCXYmySQoKNfAO5nSgGUJV0drIgHqAWmxnyM6eLCU9HOY7G+9lZ5Hz5qToCTi5jhKWZHDxX8unjNB4OK/dxNsCEo6lMAE2ee6RKnC8k/kiLct2VmZcMkn9pLUvr/L6V1zwcAgB0iQAyTIARLkAAlygAQ5QIIcIEEOkCAHSJADJMgBEuQACXKABDlAghwgQQ6QIAdIkAMkyAES5AAJcoAEOUDSKsc/+CLOlaP3XwOncrYcjfnB+CAHSJADJMgBEuT4Dh6N6Q71SCDHF/BYaUmKHD/G49FuB3L8Fo9HxY7kNS/BO2uizab4+hfk+HQej4od+Qui/OpwrYneHm5Bjk+nLsf2Eb9aLnshXfwqMwdyfDr7crhprEH61jTk+DoedTmKL8L2coQvsEOO76MqR/lF2P4lhmFAihzfR12OJXnrZv6OTGNDEuT4PtoC0iWcyZYISL+VaquyfXC18qvs9IEVXoSdry2+BBk5voBqwFF8EXahh7RwuYIcIEEOkCAHSJADJMgBEuQACXKABDlAghwgQQ6QIAdIkAMkyAES5AAJcoAEOUCCHN/B/NJexUL1K5HjC5hXju+IHF/PPL9sRwnk+CLmWdphHxBd/DOkydK6PZr6hf8LszjAOgM5BmWea3Y8P0z09Hm4tG5OHkl3K//kKL6boXiYfZDjbhrkCMetmGj14gexRINZtoV/TfUGcgxLXY6tKojHuEWD723lEiXZFv41FjtyjMm8K4dvR7wcxksSioIcX0ZVDt92hKPso4AUOb6YNjmCZTtnkOPr2ZEjumaNYo7QA2KOL6Xmhg0v4lH2R65Wmk4BOYal2kMavfcpCEhb+zmazgA5xqXWe247KqL25UgPaQvI8XtwbwUkyAES5AAJcoAEOUCCHCBBDpAgB0iQAyTIARLkAAlygAQ5QIIcIEEOkCDHdzDVNxdKz+xsX5DjK5hWKimQ41eZpn07XgI5Pp5pkna4UfbrA6PBrzItblX+MKkbPI0cn8401ex4fhg36m2JnzxPfovY/wzcagdyfDoNcgRjUYrDU5IBLG5H5Ph06nJsbUY06q2wKhz65pMhx4cz7cphjsgR7Iccn09VjrDgm+VwP2yPHJ/O6XL4yxfk+HR25EhfxLEfcxCQfhE1N2zfRdiXsRTCEK5WvpVqD6kfHG2vQ8J+jmXbGPdzLMQc30Ot9zyTI+4h3TamPaTrbsjxk7SVJnL8GGFYugdy/BjBW6B2QY5fw3Vx7YMcP0ezG8gBGuQACXKABDlAghwgQQ6QIAdIkAMkyAES5AAJcoAEOUCCHCBBDpAgB0iQAyTIARLkAAlygAQ5QIIcIEEOkCAHSJADJMgBEuQACXKABDlAghwgQQ6QIAdIkAMkyAES5AAJcoAEOUCCHCBBDpAgB0iQAyTIARLkAAlygAQ5QIIcIEEOkCAHSJADJMgBEuQACXKABDlAghwgQQ6QIAdIkAMkyAES5AAJcoAEOUCCHCBBDpAgB0iQAyTIARLkAAlygAQ5QIIcIEEOkCAHSJADJMgBEuQACXKABDlAghwgQQ6QIAdIkAMkyAES5AAJcoAEOUCCHCBBDpAgB0iQAyTIARLkAAlygAQ5QIIcIEEOkCAHSJADJMgBEuQACXKABDlAghwgQQ6QIAdIkAMkyAES5AAJcoBkSDmmZAp9GFGOaZqiKXRiRDk2Kybk6MyQcjztmJCjNyPKMa21hpcDR/owoBxPJ0I7qEA6MaAcTozJefJ+nvACI8oR24Eb3RhRjinh/RzhJQaUAzdGYUA5sGMUPkEO7OjEgHJkbmBHJ0aTw91VKciBIzczmBz+rkouBxXI3Qwmh7+rktlB63I7Q8gRPr9RMGOyxryQNbzBCHLE7YYyAzduZwQ5fKSxLZTleCFjeIsh5LCRxjareCVneIMR5PB36KtuYMfdDCDHVL5ASb1AjtsZQI59M3jmpw+d5Sh3iNKcjEFfOaZyhyhyjEF3ORriDezoRO9mpUUM7OhEVznql67L4qcHMoXT6CnHVOnYCLe35win0rfmqAYZE1ewnekfkCo3GGvfnXHlcI4gRy/GlCMYZE/M0Y9h5dimuNGR3gEp3aMD0/tStqoFcvRl4B7S8BEg6MGgMYdvUrCjH72f56g2LGsK5OjFwM0KVvSme82htECO/vSWo2zHwTzgGrrLUbTjaB5wCf3lKA+NxY8B6C9Hseag8hiB3lcryg3kGIABOsGIOkald80hxiYcygQuonfMkdcc9HAMQ285ag8YQ2dGlIO7bYPQW45CQLquPpYNXMFwAemh3eFSul/K2ilujEfvZsWCGQOCHCAZRI6JPvMBGUMOF5e+sjNcxQByTEFcenhnuJD+l7JEG8PS/VIWOcZlkJoDO0YEOUDSRQ73WhZ6RoemhxzBxQlyjEyfmsN1ayDHyPSJOVyHKG6MTKeA1D/Ugxzj0lcOGJrOzQqMTOeAFEam86UsjMztcvDT45/D3XK4p8vnxuNCP+6vObZgdKbyGJ77Y46tZ2Neg1IamIG5vVmJxiHwJo6huVmOuF+U3tGx6RCQptCwjEqXgNQGpb7uwI8RuU8O28FRrDuQY0RukyOtLWI3kGNEbqw5QmaC0g/gxpijXG3gxrjcGZAix4dxixyVWBQ7BuYOOSb3W6DYcSOP9ePh5g9zT81R+V1y3i15EY/H4/nxeM6/lMU9MYcTIb1Kod64DmvH9vECNwWk3o6SHo2nAMd4BLyUwd1yUG/cw9aafIIcW2QhGhXsOB0Xa4wvRxaQ0kF6IevlyZ8Q77YrN13KzvMSGDGHkQdjFM5lDUEjMV6146aYY36i7Wg8CWgg02J0OZZYjs2O+a9CQYxzEW6MLMdWdzhDnnN/H42Hh2Y+T455ju3wcqDH2XyWHHPohm1QHK2nCo18lByrAqEcttpAjisou/GCHffUHE8DvA1R7dF4fGhlJyI9IMk9MUdcc/yt2NbixukoNx62c6w9q0vlmO1kLoAb17A1ImU7jgUfV8qxlX3JDMLRy9A1x+HA9Nqa46/s4yYFO67nLDcujjls8VN33MoHyVF1Y0GO06mYMVazsjUq0o8DpwqN1OqNQ3bc0azQptxKPeQYRo59N7DjdFwNUQ86YkfKay++lMWOPtRrj2cCL8LDPiCUViu9mxXkuIKqG7Yz7OET++omyubi7vM2OVxPKpzFjh6hHPpR0xFqjtn2pDo90ORNfPWQKxF7IIR5cnkPaVPN4TtDtv0aTwqqVO0oJokj0svvyu664TvJgnv7jScFNVoaFbF65Wo5WhoWX4XYuqbxnKBG3Q13B7+fHHsNS7jR7oAbp7DnRjkqibK4PCCtVx7LUlog6HifR7UnTMkR53HbM6SqJRGVSeNZgWTfjs41x0pbvRGvbDwr0OzUG7k7d3eC/VH2QrnhqhR4l107SraEGVwvh/Bi50a+jU/pD3uDw3Isd8uR6uEuVcshR9q+IMfrHFUj5Z5mJRy0km9dmVI5aGLe5HjFkXD/WNnihikbJIkcb/PYv5qt23Hr+zlKvZ+u1kCOkznsxuP2eytPNi/m/L6Jb1Xc4HvcOIXNjaN+hFncNlbWFnRc2laYeVJyNJ4eKOKKYTw5JLO7YpFy8CDQe0RiNHSMhfSV40lLs0IN8jK+0A82KiPIYduc5xsoRUBK8/Iyj+D91o9H+YbKsHKUdAjFmHnC4x2cFn6+3Y7ucuzd0qeb9HyEF5kdA8jRYMfxPEEj64wR5WDU5K0UA49iyiHk8N2ks7rH8kquUMJVEvuvRh9Dju0VcuuEuuN6stqjmGoMOdYqY+L22020uTGGHFv5y34w5LiAD4k55vAGCyHpPbREpAPIMbvxTDU50ONsHu5+i/r5yAHkcFSbFeS4n4HkqAekyHE/48jx/M0mfSmLG/czjBw+8hADXeB2hpFjRbqBHB0YTI4lek4dO/oynByrB7Od6DENcDkjyrGU79O+mTEcZjg5nvjawzcvZ+QLhxhSjrj2WHi+uBNDyvHEXduelSEcZVw5oDvIARLkAAlygAQ5QIIcIEEOkCAHSJADJMgBEuQACXKABDlAghwgQQ6QIAdIkAMkyAES5AAJcoAEOUCCHCBBDpAgB0iQAyTIARLkAAlygAQ5QIIcIEEOkCAHSJADJMgBEuQACXKABDlAghwgQQ6QIMfVPIqzisavuZTU2HV7eRS3l1Yix8UEv62nfqEzBDl+CmeH/PnWkHY5dBEfEKyeH3JcziZF2Q3zP8GMXYzXBsmCPZ+rgw+3u4mSm+gYds/0wMjRCfv7z4VNxmxlY2d8gUVr/8o+KQFXomZrT3yz4nKNl9y0dGDk6IT+WV9bwu6fdyvd7SNem++p5AiT+8zCXLMDl0oYOe5A/iC4iaaxBib50oUcJpejknWUME6LHH3QcgQNvzG5HEFbYopybBFFWiEsu3KkB0aOTuhmZYla/jWqjJsMH5AqOZ4x53JQjuzAyNGHSkD6h49Dl1Lp+nAh3stOXpQjPTBydKF2KRtFnCLmqAWkL8uRHRg5elDtBHNlFGtglqXtauWQHGGu2YGRowP17vO8nyPukXBrl3LMsYQ7ucUwQRLAmHA+mkGO4Ug7KnUPaflyZYn/86ty0EP6MzQWyDv5IcenghygOdeOUm7I8bEgB3QEOUCCHCBBDpAgB0iQAyTIARLkAAlygAQ5QIIcIEEOkCDH1czF2TaKX/pOSaSbk6cHjxzs/8JsK3bkeI15nv3s0Z2R48txdszH5ShSLwnt0/Fb/H+F2bQXcrzKJkXJDfuA6OKfIU2W1u3RNFkoPFp61uB75LiepxblesPJETx9Hi6tm/NB8tHKQo6LlSNsVvyD5tFS5aF05Lie+Ulpiy1Kk834grU1gF2I6obiixmUHD5BmoMYzvIv2KEGcryBciMqwXjGTW3BRkmS9EGGbsMZg++R4waqcvh2xBeV8SVZLM09OU4afI8c16OblaBQVju2rzkMA3zK5Ygcf/NRHi1yNA2+L/4VLSBHTiUgTavz4Gs25nU5lnMG3/+j5riayqVsVEWkMUfUJByLOV6Ww8QrkeNidjrBjLtaUHJsH+JqJc3OTtrliPINVyLH1ex1n0cRoI8Zmvs50uxsrsZ55xbDBMFSvZ8DOTpifHEGhX2ghzTNL5i4j6oc9JD+DI3l1ARyfBnIAZoT7eCW/beBHHAHPCYIEuQACXKABDlAghwgQQ6QIAdIkAMkyAES5AAJcoAEOa5mKs4mFL5ds7O9nkHycGD7juFK5LiYaZr8rEyFHL+Js2OqyPEuuohfu4O/7oUcl7NJUXLDjbJf/9GDX2Va3Kr8YdJs8HTyRPqbY+vdWuS4gacW5XojkiN87jt8GDx5DN2Oc8zzWawcYbPiHiiPlyrPnC/IcSPTk9IWW6iuXCvDU4JKIS0O/yj5GWPr3Qdy3IFyIy9L/2mKC24kQ5yNS3fG2Hr3gRx3UJXDHJEj2C9ctCtPGVvvEiLHDehmJSz4ZjnCIGIJdzp7bD1yXE8lIH1FjsIwSNfWvCjH4uuvMCFyXE7lUtb/zy7tMUdQ5i4XO3lNDpOuRI6b2OkEy+QwSyEMMcGWc+TIDmNXIsd97HWf+wKxJRz2cyzbRhcZrEVYjjnOGlvvEiJHZzI54h7SbaNxW2wCUXWEHy+OrffpkGNIGr/tl9O35YccgxH/px/b6+yzQI7BCN4CdWi3c09inZwvB7zH+r6lw3udew52BjkG4xU3ruJcOeAXQQ6QIAdIkAMkyAES5AAJcoAEOUCCHCBBDpAgB0iQAyTIARLkAAlygAQ5QIIcIEEOkCAHSJADJMgBEuQACXKABDlA8h85ypVh4w6lnwAAAABJRU5ErkJggg==" /><!-- --></p>
 <p>The new observations lie close to their original counterparts.</p>
 </div>
@@ -190,7 +398,7 @@ iris.umap =<span class="st"> </span><span class="kw">umap</span>(iris.data)</cod
 <div id="configuration-objects" class="section level3">
 <h3>Configuration objects</h3>
 <p>The default configuration object is called <code>umap.defaults</code>. This is a list encoding default values for all the parameters used within the algorithm.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">umap.defaults</code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">umap.defaults</a></code></pre></div>
 <pre><code>## umap configuration parameters
 ##            n_neighbors: 15
 ##           n_components: 2
@@ -215,19 +423,19 @@ iris.umap =<span class="st"> </span><span class="kw">umap</span>(iris.data)</cod
 ##        umap_learn_args: NA</code></pre>
 <p>For a description of each field, see the documentation in <code>help(umap.defaults)</code> or the original publication.</p>
 <p>To create a custom configuration, we can first make a copy of the defaults and then update any of the fields. For example, let’s change the seed for random number generation.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">custom.config =<span class="st"> </span>umap.defaults
-custom.config<span class="op">$</span>random_state =<span class="st"> </span><span class="dv">123</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">custom.config =<span class="st"> </span>umap.defaults</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2">custom.config<span class="op">$</span>random_state =<span class="st"> </span><span class="dv">123</span></a></code></pre></div>
 <p>We can observe the changed settings by inspecting the object again (try it). To perform the UMAP projection with these settings, we can run the projection again and provide the configuration object as a second argument.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris.umap.<span class="dv">2</span> =<span class="st"> </span><span class="kw">umap</span>(iris.data, custom.config)
-<span class="kw">plot.iris</span>(iris.umap.<span class="dv">2</span>, iris.labels,
-          <span class="dt">main=</span><span class="st">&quot;Another UMAP visualization (different seed)&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">iris.umap<span class="fl">.2</span> =<span class="st"> </span><span class="kw">umap</span>(iris.data, custom.config)</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="kw">plot.iris</span>(iris.umap<span class="fl">.2</span>, iris.labels,</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3">          <span class="dt">main=</span><span class="st">&quot;Another UMAP visualization (different seed)&quot;</span>)</a></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
 <p>The result is slightly different than before due to a new instantiation of the random number generator.</p>
 </div>
 <div id="additional-arguments" class="section level3">
 <h3>Additional arguments</h3>
 <p>Another way to customize the algorithm is to specify the non-default parameters, one-by-one. To achieve equivalent results to the above, we can thus use</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris.umap.<span class="dv">3</span> =<span class="st"> </span><span class="kw">umap</span>(iris.data, <span class="dt">random_state=</span><span class="dv">123</span>)</code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">iris.umap<span class="fl">.3</span> =<span class="st"> </span><span class="kw">umap</span>(iris.data, <span class="dt">random_state=</span><span class="dv">123</span>)</a></code></pre></div>
 <p>The coordinates in this output object should match the ones from <code>iris.umap.2</code> (check it!)</p>
 </div>
 </div>
@@ -241,12 +449,12 @@ custom.config<span class="op">$</span>random_state =<span class="st"> </span><sp
 <div id="prediction" class="section level3">
 <h3>Prediction</h3>
 <p>Projection of new data onto an existing embedding uses a separate random number generator, which can be controlled via parameter <code>transform_state</code>. This seed ensures that predictions executed in the exactly the same way produce identical ouput each time. In addition to stability provided by the <code>transform_state</code> seed, the default algorithm further implements a mechanism by which predictions are consistent when performed individually or in batch. Let’s look at an example based on the Iris data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># predict in batch, display first item</span>
-<span class="kw">predict</span>(iris.umap, iris.wnoise)[<span class="dv">1</span>, , drop=<span class="ot">FALSE</span>]</code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co"># predict in batch, display first item</span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="kw">predict</span>(iris.umap, iris.wnoise)[<span class="dv">1</span>, , drop=<span class="ot">FALSE</span>]</a></code></pre></div>
 <pre><code>##      [,1]      [,2]
 ## 1 15.3052 -1.921424</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># predict only first item</span>
-<span class="kw">predict</span>(iris.umap, iris.wnoise[<span class="dv">1</span>,,<span class="dt">drop=</span><span class="ot">FALSE</span>])</code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="co"># predict only first item</span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="kw">predict</span>(iris.umap, iris.wnoise[<span class="dv">1</span>,,<span class="dt">drop=</span><span class="ot">FALSE</span>])</a></code></pre></div>
 <pre><code>##      [,1]      [,2]
 ## 1 15.3052 -1.921424</code></pre>
 <p>The mechanism that enables stability between batch and individual predictions also ensures that predictions are stable when data are presented in a different order. However, this mechanism is not enforced - for performance reasons - when the new data contain more than a thousand rows. This is an implementation detail and may change in future versions.</p>
@@ -257,7 +465,7 @@ custom.config<span class="op">$</span>random_state =<span class="st"> </span><sp
 <p>The package provides two implementations of the umap method, one written in R (with help from several packages from CRAN) and one accessed via an external python module.</p>
 <p>The implementation written in R is the default. It follows the design principles of the UMAP algorithm and its running time scales better-than-quadratically with the number of items (points) in a dataset. It is thus in principle suitable for use on datasets with thousands of points. This implementation is the default because it should be functional without extensive dependencies.</p>
 <p>The second available implementation is a wrapper for a python package <code>umap-learn</code>. To enable this implementation, specify the argument <code>method</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris.umap.<span class="dv">4</span> =<span class="st"> </span><span class="kw">umap</span>(iris.data, <span class="dt">method=</span><span class="st">&quot;umap-learn&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">iris.umap<span class="fl">.4</span> =<span class="st"> </span><span class="kw">umap</span>(iris.data, <span class="dt">method=</span><span class="st">&quot;umap-learn&quot;</span>)</a></code></pre></div>
 <p>This command has several dependencies. You must have the <code>reticulate</code> package installed and loaded (use <code>install.packages(&quot;reticulate&quot;)</code> and <code>library(reticulate)</code>). Furthermore, you must have the <code>umap-learn</code> python package installed (see the <a href="https://github.com/lmcinnes/umap">package repo</a> for instructions). If either of these components is not available, the above command will display an error message.</p>
 <p>A separate vignette explains additional aspects of interfacing with <code>umap-learn</code>, including handling of discrepancies between releases.</p>
 <p>Note that it will not be possible to produce exactly the same output from the two implementations due to inequivalent random number generators in R and python, and due to slight discrepancies in the implementations.</p>
@@ -266,7 +474,7 @@ custom.config<span class="op">$</span>random_state =<span class="st"> </span><sp
 <div id="appendix" class="section level2">
 <h2>Appendix</h2>
 <p>The custom plot function used to visualize the Iris dataset:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot.iris</code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">plot.iris</a></code></pre></div>
 <pre><code>## function(x, labels,
 ##          main=&quot;A UMAP visualization of the Iris dataset&quot;,
 ##          colors=c(&quot;#ff7f00&quot;, &quot;#e377c2&quot;, &quot;#17becf&quot;),
@@ -274,7 +482,7 @@ custom.config<span class="op">$</span>random_state =<span class="st"> </span><sp
 ##          cex.main=1, cex.legend=1) {
 ## 
 ##   layout = x
-##   if (class(x)==&quot;umap&quot;) {
+##   if (is(x, &quot;umap&quot;)) {
 ##     layout = x$layout
 ##   } 
 ##   
@@ -300,16 +508,16 @@ custom.config<span class="op">$</span>random_state =<span class="st"> </span><sp
 ##          col=colors[as.integer(labels.u)],
 ##          bty=&quot;n&quot;, pch=pch, cex=cex.legend)
 ## }
-## &lt;bytecode: 0x98f9758&gt;</code></pre>
+## &lt;bytecode: 0x90f31d8&gt;</code></pre>
 <p>Summary of R session:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">sessionInfo</span>()</a></code></pre></div>
 <pre><code>## R version 3.5.1 (2018-07-02)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 16.04.6 LTS
 ## 
 ## Matrix products: default
 ## BLAS: /software/opt/R/R-3.5.1/lib/libRblas.so
-## LAPACK: /software/opt/R/R-3.5.1/lib/libRlapack.so
+## LAPACK: /software/opt/anaconda/anaconda3-2019.07/lib/libmkl_rt.so
 ## 
 ## locale:
 ##  [1] LC_CTYPE=en_GB.UTF-8       LC_NUMERIC=C              
@@ -323,7 +531,7 @@ custom.config<span class="op">$</span>random_state =<span class="st"> </span><sp
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] umap_0.2.3.1
+## [1] umap_0.2.4.0
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] Rcpp_1.0.1      lattice_0.20-38 digest_0.6.20   RSpectra_0.14-0

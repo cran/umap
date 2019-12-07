@@ -72,7 +72,7 @@ make.spectral.embedding = function(d, g) {
   one.embedding = function(g2) {
     result = execute.spectral(g2)
     if (is.null(result)) {
-      warning("failed creating initial embedding; using random embedding insteadx",
+      warning("failed creating initial embedding; using random embedding instead",
               call.=FALSE)
       result = make.random.embedding(d, g2$n.elements)
     }
@@ -123,8 +123,8 @@ make.initial.embedding = function(V, config, g=NULL) {
 
   numcomp = config$n_components
   
-  # make am ebedding, either using a premade matrix, or with random numbers
-  if (class(config$init) == "matrix") {
+  # make an ebedding, either using a pre-made matrix, or with random numbers
+  if (is(config$init, "matrix")) {
     result = config$init
   } else {
     result = NULL
@@ -171,10 +171,9 @@ make.initial.spectator.embedding = function(embedding, knn.indexes) {
   
   # fill in coordinates by simple averaging 
   for (i in 1:nrow(result)) {
-    result[i,] = colMeans(embedding[knn.indexes[i,], ])
+    result[i,] = colMeans(embedding[knn.indexes[i,], , drop=FALSE])
   }
   
   result
 }
-
 

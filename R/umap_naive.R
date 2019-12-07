@@ -37,7 +37,7 @@ umap.naive = function(d, config) {
   # perhaps extract knn from input
   knn = NULL
   if ("knn" %in% names(config)) {
-    if (class(config$knn) == "umap.knn") {
+    if (is(config$knn, "umap.knn")) {
       message.w.date("using supplied nearest neighbors", verbose)
       knn = config$knn
     }
@@ -147,14 +147,14 @@ naive.simplicial.set.embedding = function(g, embedding, config, fix.observations
   } else {
     # this branch occurs during prediction
     # (many fixed observations, a few to predict/optimize)
-    eps = eps[eps[, "from"]>fix.observations, ]
+    eps = eps[eps[, "from"]>fix.observations, , drop=FALSE]
     # define the indeces that need optimizing (skips the fixed observations)
     indeces = seq(fix.observations+1, ncol(result))
     seeds = column.seeds(result[, indeces, drop=FALSE], key=config$transform_state)
     # construct temporary embeddings that hold fix.observations plus one "temp" item
     # the "temp" items will be the one that will be optimized on its own
     temp.index = fix.observations + 1
-    temp.embedding = result[, seq_len(fix.observations+1)]
+    temp.embedding = result[, seq_len(fix.observations+1), drop=FALSE]
     temp.eps = split.data.frame(eps, eps[, "from"])
     for (i in seq_along(indeces)) {
       temp.embedding[, temp.index] = result[, indeces[i]]
@@ -166,12 +166,8 @@ naive.simplicial.set.embedding = function(g, embedding, config, fix.observations
       }
       result[, indeces[i]] = temp.result[, temp.index]
     }
-
-    # original "else" implementation
-    #eps = eps[eps[, "from"]>fix.observations,]
-    #result = naive.optimize.embedding(result, config, eps)
   }
-
+  
   colnames(result) = g$names
   t(result)
 }
