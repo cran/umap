@@ -1,4 +1,4 @@
-## ---- echo=FALSE---------------------------------------------------------
+## ---- echo=FALSE--------------------------------------------------------------
 ## block with some startup/background objects functions
 library(umap)
 iris.colors = c("#ff7f00", "#e377c2", "#17becf")
@@ -26,35 +26,35 @@ plot.iris = function(x, labels,
 
 set.seed(123456)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 library(umap)
 iris.data = iris[, grep("Sepal|Petal", colnames(iris))]
 
-## ----umap.learn, eval=FALSE----------------------------------------------
+## ----umap.learn, eval=FALSE---------------------------------------------------
 #  library(reticulate)
 #  iris.umap_learn = umap(iris.data, method="umap-learn")
 
-## ----defaults, eval=FALSE------------------------------------------------
+## ----defaults, eval=FALSE-----------------------------------------------------
 #  umap.defaults
 
-## ----defaults2, eval=TRUE, echo=FALSE, collapse=TRUE---------------------
+## ----defaults2, eval=TRUE, echo=FALSE, collapse=TRUE--------------------------
 umap.defaults
 
-## ----umap.learn.config, eval=FALSE---------------------------------------
+## ----umap.learn.config, eval=FALSE--------------------------------------------
 #  ## should display a configuration summary
 #  iris.umap_learn$config
 
-## ----iris.foo, eval=FALSE------------------------------------------------
+## ----iris.foo, eval=FALSE-----------------------------------------------------
 #  ## (not evaluated in vignette)
 #  iris.foo = umap(iris.data, method="umap-learn", foo=4, n_epochs=100)
 #  iris.foo$config
 
-## ----iris.custom, eval=FALSE---------------------------------------------
+## ----iris.custom, eval=FALSE--------------------------------------------------
 #  ## (not evaluated in vignette)
 #  iris.custom = umap(iris.data, method="umap-learn",
 #                     umap_learn_args=c("n_neighbors", "n_epochs"))
 #  iris.custom$config
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 sessionInfo()
 

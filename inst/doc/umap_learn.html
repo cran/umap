@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -94,7 +94,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -408,12 +408,12 @@ body {
 <h2>Appendix</h2>
 <p>Summary of R session:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">sessionInfo</span>()</a></code></pre></div>
-<pre><code>## R version 3.5.1 (2018-07-02)
+<pre><code>## R version 3.6.1 (2019-07-05)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 16.04.6 LTS
+## Running under: Ubuntu 18.04.3 LTS
 ## 
 ## Matrix products: default
-## BLAS: /software/opt/R/R-3.5.1/lib/libRblas.so
+## BLAS:   /software/opt/R/R-3.6.1/lib/libRblas.so
 ## LAPACK: /software/opt/anaconda/anaconda3-2019.07/lib/libmkl_rt.so
 ## 
 ## locale:
@@ -428,18 +428,20 @@ body {
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] umap_0.2.4.0
+## [1] umap_0.2.4.1
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.1      lattice_0.20-38 digest_0.6.20   RSpectra_0.14-0
-##  [5] grid_3.5.1      jsonlite_1.6    magrittr_1.5    evaluate_0.14  
-##  [9] stringi_1.4.3   Matrix_1.2-17   reticulate_1.12 rmarkdown_1.13 
-## [13] tools_3.5.1     stringr_1.4.0   xfun_0.7        yaml_2.2.0     
-## [17] compiler_3.5.1  askpass_1.1     htmltools_0.3.6 openssl_1.4    
-## [21] knitr_1.23</code></pre>
+##  [1] Rcpp_1.0.3      digest_0.6.23   rappdirs_0.3.1  jsonlite_1.6   
+##  [5] magrittr_1.5    evaluate_0.14   rlang_0.4.2     stringi_1.4.3  
+##  [9] reticulate_1.14 rmarkdown_2.0   tools_3.6.1     stringr_1.4.0  
+## [13] xfun_0.11       yaml_2.2.0      compiler_3.6.1  askpass_1.1    
+## [17] htmltools_0.4.0 openssl_1.4.1   knitr_1.26</code></pre>
 <p> </p>
 </div>
 
+
+
+<!-- code folding -->
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

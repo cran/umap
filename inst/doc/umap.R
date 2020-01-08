@@ -1,4 +1,4 @@
-## ---- echo=FALSE---------------------------------------------------------
+## ---- echo=FALSE--------------------------------------------------------------
 ## block with some startup/background objects functions
 library(umap)
 
@@ -38,70 +38,70 @@ plot.iris = function(x, labels,
 
 set.seed(123456)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 head(iris, 3)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 iris.data = iris[, grep("Sepal|Petal", colnames(iris))]
 iris.labels = iris[, "Species"]
 
-## ----iris.umap-----------------------------------------------------------
+## ----iris.umap----------------------------------------------------------------
 library(umap)
 iris.umap = umap(iris.data)
 
-## ----umap.print----------------------------------------------------------
+## ----umap.print---------------------------------------------------------------
 iris.umap
 
-## ----umap.layout---------------------------------------------------------
+## ----umap.layout--------------------------------------------------------------
 head(iris.umap$layout, 3)
 
-## ---- fig.width=3.6, fig.height=3.6, dpi=150-----------------------------
+## ---- fig.width=3.6, fig.height=3.6, dpi=150----------------------------------
 plot.iris(iris.umap, iris.labels)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 iris.wnoise = iris.data + matrix(rnorm(150*40, 0, 0.1), ncol=4)
 colnames(iris.wnoise) = colnames(iris.data)
 head(iris.wnoise, 3)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 iris.wnoise.umap = predict(iris.umap, iris.wnoise)
 head(iris.wnoise.umap, 3)
 
-## ---- fig.width=3.6, fig.height=3.6, dpi=150-----------------------------
+## ---- fig.width=3.6, fig.height=3.6, dpi=150----------------------------------
 plot.iris(iris.umap, iris.labels)
 plot.iris(iris.wnoise.umap, iris.labels, add=T, pch=4,
           legend.suffix=" (with noise)")
 
-## ----defaults, eval=FALSE------------------------------------------------
+## ----defaults, eval=FALSE-----------------------------------------------------
 #  umap.defaults
 
-## ----defaults2, eval=TRUE, echo=FALSE, collapse=TRUE---------------------
+## ----defaults2, eval=TRUE, echo=FALSE, collapse=TRUE--------------------------
 umap.defaults
 
-## ----custom.config, eval=TRUE--------------------------------------------
+## ----custom.config, eval=TRUE-------------------------------------------------
 custom.config = umap.defaults
 custom.config$random_state = 123
 
-## ----custom2, fig.width=3.6, fig.height=3.6, dpi=150---------------------
+## ----custom2, fig.width=3.6, fig.height=3.6, dpi=150--------------------------
 iris.umap.2 = umap(iris.data, custom.config)
 plot.iris(iris.umap.2, iris.labels,
           main="Another UMAP visualization (different seed)")
 
-## ----custom3, eval=FALSE-------------------------------------------------
+## ----custom3, eval=FALSE------------------------------------------------------
 #  iris.umap.3 = umap(iris.data, random_state=123)
 
-## ---- eval=TRUE----------------------------------------------------------
+## ---- eval=TRUE---------------------------------------------------------------
 # predict in batch, display first item
 predict(iris.umap, iris.wnoise)[1, , drop=FALSE]
 # predict only first item
 predict(iris.umap, iris.wnoise[1,,drop=FALSE])
 
-## ---- eval=FALSE---------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------
 #  iris.umap.4 = umap(iris.data, method="umap-learn")
 
-## ----show.plot.iris------------------------------------------------------
+## ----show.plot.iris-----------------------------------------------------------
 plot.iris
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 sessionInfo()
 
