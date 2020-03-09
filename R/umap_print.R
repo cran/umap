@@ -5,6 +5,7 @@
 #' Display a summary of a umap object
 #'
 #' @keywords internal
+#' @noRd
 #' @param x umap object
 #' @param ... other parameters (not used)
 #'
@@ -30,6 +31,7 @@ print.umap = function(x, ...) {
 #' Display contents of a umap configuration
 #'
 #' @keywords internal
+#' @noRd
 #' @param x object of class umap.config
 #' @param ... ignored
 #'
@@ -46,14 +48,16 @@ print.umap.config = function(x, ...) {
   }
   
   message("umap configuration parameters")
-  sapply(names(x), function(z) {
+  primitives = c("numeric", "integer", "character", "logical")
+  vapply(names(x), function(z) {
     zval = x[[z]]
-    if (sum(class(zval) %in% c("numeric", "integer", "character", "logical"))) {
+    if (sum(class(zval) %in% primitives)) {
       message(padspaces(z), paste(zval, collapse=" "))
     } else {
       message(padspaces(z), "[", paste(class(zval), collapse=","), "]")
     }
-  })
+    z
+  }, character(1))
 
   invisible(x)
 }
@@ -62,6 +66,7 @@ print.umap.config = function(x, ...) {
 #' Display summary of knn.info
 #'
 #' @keywords internal
+#' @noRd
 #' @param x object of class umap.knn
 #' @param ... ignored
 #'
@@ -83,5 +88,4 @@ print.umap.knn = function(x, ...) {
   
   invisible(x)
 }
-
 

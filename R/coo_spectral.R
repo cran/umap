@@ -11,6 +11,7 @@
 #' Construct an identity matrix
 #'
 #' @keywords internal
+#' @noRd
 #' @param n.elements integer, number of elements
 #' @param names character vector, names associated with the elements
 #'
@@ -30,14 +31,13 @@ identity.coo = function(n.elements, names=NULL) {
 }
 
 
-
-
 #' Construct a normalized Laplacian for a graph
 #'
 #' This implementation constructs the laplacian  element-by-element.
 #' Diagonals: 1, Element_ij = -1/sqrt(deg_i deg_j)
 #'
 #' @keywords internal
+#' @noRd
 #' @param x coo object encoding a graph
 #'
 #' @return new coo object 
@@ -54,7 +54,8 @@ laplacian.coo = function(x) {
 
   # get degrees
   degrees = x$coo[order(x$coo[, "from"]), ]
-  degrees = sapply(split(degrees[,"value"], degrees[, "from"]), sum)
+  degrees = vapply(split(degrees[,"value"], degrees[, "from"]), sum,
+                   numeric(1))
   
   # construct diagonal part of the laplacian
   result = identity.coo(x$n.elements, x$names)
@@ -75,11 +76,10 @@ laplacian.coo = function(x) {
 }
 
 
-
-
 #' Count the number of connected components in a coo graph
 #'
 #' @keywords internal
+#' @noRd
 #' @param x coo object
 #'
 #' @return list with number of connected components and a vector
@@ -97,7 +97,8 @@ concomp.coo = function(x) {
   
   # make sure only looking at non-zero components
   x = reduce.coo(x)
-  # get lists of neighbors (this will be a list with keys e.g. "1", "2", etc.
+  # get lists of neighbors
+  # (this will be a list with keys e.g. "1", "2", etc.)
   neighbors = split(x$coo[, "to"], x$coo[, "from"])
 
   epoch = 0
@@ -126,11 +127,10 @@ concomp.coo = function(x) {
 }
 
 
-
-
 #' Subset a coo
 #'
 #' @keywords internal
+#' @noRd
 #' @param x coo object
 #' @param items items (indexes) to keep
 #'
@@ -140,9 +140,9 @@ subset.coo = function(x, items) {
   
   # check for early exit
   if (length(items)==x$n.elements) {
-    return (x);
+    return (x)
   }
-
+  
   # get logical vector for x indexes to keep
   x.keep = rep(FALSE, x$n.elements)
   x.keep[items] = TRUE
@@ -155,15 +155,14 @@ subset.coo = function(x, items) {
     names(result$names) = NULL
   }
   result$n.elements = length(items)
-
+  
   # re-label from-to
   new.indexes = rep(NA, x$n.elements)
-  new.indexes[which(x.keep)] = 1:length(items)
+  new.indexes[which(x.keep)] = seq_along(items)
   
   result$coo[, "from"] = new.indexes[result$coo[, "from"]]
   result$coo[, "to"] = new.indexes[result$coo[, "to"]]
   
   result
 }
-
 

@@ -18,27 +18,31 @@
 NULL
 
 
+# For interfacing with python and "umap-learn"
+#' @importFrom reticulate py_module_available import
+NULL
 
 
-# These lines are required to control access to the umap python module
-#
 # This implements a "soft" requirement for python and the umap module
 # i.e. the package should work when those components are absent
 # but gain additional functionality when those components are present
+#' interface to umap-learn via reticulate
+#'
+#' @keywords internal
+#' @noRd
 python.umap = NULL
 .onLoad = function(libname, pkgname) {
-  if (suppressWarnings(suppressMessages(requireNamespace("reticulate")))) {
-    has.pkg.umap = reticulate::py_module_available("umap")
-    if (has.pkg.umap) {
-      # assignment in parent environment!
-      python.umap <<- reticulate::import("umap", delay_load=TRUE)
-    }
-  }
+  # this "try" block is necessary because:
+  # a system that python but not umap-learn stops during the test suite
+  # with the following sequence of commands (devtools)
+  # document(); test(); test()
+  # note that test() only fails at second round
+  try({
+    python.umap <<- reticulate::import("umap", delay_load=TRUE)
+  }, silent=TRUE)
 }
 
-
-
-
+  
 #' Default configuration for umap 
 #'
 #' A list with parameters customizing a UMAP embedding. Each component of the
@@ -60,27 +64,30 @@ python.umap = NULL
 #' n_epochs: integer; number of iterations performed during
 #' layout optimization
 #'
-#' input: character, use either "data" or "dist"; determines whether the primary
-#' input argument to umap() is treated as a data matrix or as a distance matrix
+#' input: character, use either "data" or "dist"; determines whether the
+#' primary input argument to umap() is treated as a data matrix or as a
+#' distance matrix
 #'
 #' init: character or matrix. The default string "spectral" computes an initial
-#' embedding using eigenvectors of the connectivity graph matrix. An alternative is
-#' the string "random", which creates an initial layout based on random coordinates. 
-#' This setting.can also be set to a matrix, in which case layout optimization
-#' begins from the provided coordinates.
+#' embedding using eigenvectors of the connectivity graph matrix. An
+#' alternative is the string "random", which creates an initial layout based on
+#' random coordinates. This setting.can also be set to a matrix, in which case
+#' layout optimization begins from the provided coordinates.
 #'
 #' min_dist: numeric; determines how close points appear in the final layout
 #'
 #' set_op_ratio_mix_ratio: numeric in range [0,1]; determines who the knn-graph
 #' is used to create a fuzzy simplicial graph
 #'
-#' local_connectivity: numeric; used during construction of fuzzy simplicial set
+#' local_connectivity: numeric; used during construction of fuzzy simplicial
+#' set
 #'
 #' bandwidth: numeric; used during construction of fuzzy simplicial set
 #'
 #' alpha: numeric; initial value of "learning rate" of layout optimization
 #'
-#' gamma: numeric; determines, together with alpha, the learning rate of layout optimization
+#' gamma: numeric; determines, together with alpha, the learning rate of
+#' layout optimization
 #'
 #' negative_sample_rate: integer; determines how many non-neighbor points are
 #' used per point and per iteration during layout optimization
@@ -95,7 +102,8 @@ python.umap = NULL
 #'
 #' random_state: integer; seed for random number generation used during umap()
 #'
-#' transform_state: integer; seed for random number generation used during predict()
+#' transform_state: integer; seed for random number generation used during
+#' predict()
 #'
 #' knn.repeat: number of times to restart knn search
 #'
@@ -141,6 +149,7 @@ class(umap.defaults) = "umap.config"
 
 #' Computes a manifold approximation and projection
 #'
+#' @export
 #' @param d matrix, input data
 #' @param config object of class umap.config
 #' @param method character, implementation. Available methods are 'naive'
@@ -161,8 +170,8 @@ class(umap.defaults) = "umap.config"
 #' # display embedding coordinates
 #' head(iris.umap$layout)
 #'
-#' @export
-umap = function(d, config=umap.defaults, method=c("naive", "umap-learn"), ...) {
+umap = function(d, config=umap.defaults,
+                method=c("naive", "umap-learn"), ...) {
   
   # prep - check inputs, configuration settings
   method = config$method = match.arg(method)
@@ -195,6 +204,7 @@ umap = function(d, config=umap.defaults, method=c("naive", "umap-learn"), ...) {
 
 #' project data points onto an existing umap embedding
 #'
+#' @export
 #' @param object trained object of class umap
 #' @param data matrix with data
 #' @param ... additional arguments (not used)
@@ -214,7 +224,6 @@ umap = function(d, config=umap.defaults, method=c("naive", "umap-learn"), ...) {
 #' # output is a matrix with embedding coordinates
 #' head(perturbed.embedding)
 #'
-#' @export
 predict.umap = function(object, data, ...) {
   
   umap.check.config.class(object$config)

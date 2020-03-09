@@ -17,9 +17,11 @@
 #' translation of the original python code.
 #'
 #' @keywords internal
+#' @noRd
 #' @param d data object
 #' @param config list with settings
-#'
+#' @importFrom stats runif
+#' 
 #' @return list, one element of which is matrix with embedding coordinates
 umap.naive = function(d, config) {
   
@@ -31,7 +33,7 @@ umap.naive = function(d, config) {
     config[c("a", "b")] = find.ab.params(config$spread, config$min_dist)
   }
   if (is.na(config$random_state)) {
-    config$random_state= as.integer(stats::runif(1, 0, 2^30))
+    config$random_state= as.integer(runif(1, 0, 2^30))
   }
   
   # perhaps extract knn from input
@@ -65,6 +67,7 @@ umap.naive = function(d, config) {
 #' predict embedding of new data given an existing umap object
 #'
 #' @keywords internal
+#' @noRd
 #' @param umap object of class umap
 #' @param data matrix with new data
 #'
@@ -92,14 +95,15 @@ umap.naive.predict = function(umap, data) {
   # create graph representation of primary and spectator data together
   graph = naive.fuzzy.simplicial.set(knn, config)
   message.w.date("creating initial embedding", verbose)
-  embedding = make.initial.spectator.embedding(umap$layout, spectator.knn$indexes)
+  embedding = make.initial.spectator.embedding(umap$layout,
+                                               spectator.knn$indexes)
   embedding = rbind(umap$layout, embedding)
   message.w.date("optimizing embedding", verbose)
   embedding = naive.simplicial.set.embedding(graph, embedding, config,
                                              fix.observations=V)  
   
   # extract coordinates for just the spectator data
-  embedding = embedding[V+(1:nrow(data)),,drop=FALSE]
+  embedding = embedding[V + seq_len(nrow(data)), , drop=FALSE]
   message.w.date("done", verbose)
   
   embedding
@@ -115,20 +119,24 @@ umap.naive.predict = function(umap, data) {
 #' create an embedding of graph into a low-dimensional space
 #'
 #' @keywords internal
+#' @noRd
 #' @param g matrix, graph connectivity as coo
 #' @param embedding matrix, coordinates for an initial graph embedding
 #' @param config list with settings
-#' @param fix.observations integer, number of points to avoid moving in optimization
+#' @param fix.observations integer, number of points to avoid moving during
+#' optimization
 #'
 #' @return matrix with embedding,
 #' nrows is from g, ncols determined from config
-naive.simplicial.set.embedding = function(g, embedding, config, fix.observations=NULL) {
-
+naive.simplicial.set.embedding = function(g, embedding, config,
+                                          fix.observations=NULL) {
+  
   if (config$n_epochs==0) {
     return(embedding)
   }
-
-  # create a new matrix with an optimized embedding (here work in transpose mode)
+  
+  # create a new matrix with an optimized embedding
+  # (here work in transpose mode)
   result = t(embedding)
   
   # simplify graph a little bit
@@ -136,7 +144,7 @@ naive.simplicial.set.embedding = function(g, embedding, config, fix.observations
   g$coo[g$coo[, "value"] < gmax/config$n_epochs, "value"] = 0
   g = reduce.coo(g)
   
-  # create an epochs-per-sample. Keep track of it together with the graph coo
+  # create an epochs-per-sample. Track it together with the graph coo
   eps = cbind(g$coo,
               eps=make.epochs.per.sample(g$coo[, "value"], config$n_epochs))
 
@@ -150,9 +158,10 @@ naive.simplicial.set.embedding = function(g, embedding, config, fix.observations
     eps = eps[eps[, "from"]>fix.observations, , drop=FALSE]
     # define the indeces that need optimizing (skips the fixed observations)
     indeces = seq(fix.observations+1, ncol(result))
-    seeds = column.seeds(result[, indeces, drop=FALSE], key=config$transform_state)
-    # construct temporary embeddings that hold fix.observations plus one "temp" item
-    # the "temp" items will be the one that will be optimized on its own
+    seeds = column.seeds(result[, indeces, drop=FALSE],
+                         key=config$transform_state)
+    # construct temporary embeddings that hold fix.observations plus one
+    # "temp" item. The "temp" items will be optimized on its own
     temp.index = fix.observations + 1
     temp.embedding = result[, seq_len(fix.observations+1), drop=FALSE]
     temp.eps = split.data.frame(eps, eps[, "from"])
@@ -178,6 +187,7 @@ naive.simplicial.set.embedding = function(g, embedding, config, fix.observations
 #' modify an existing embedding 
 #' 
 #' @keywords internal
+#' @noRd
 #' @param tembedding matrix, transpose of matrix with an initial embedding
 #' @param config list with settings
 #' @param eps matrix with connectivity coo graph and epochs per sample;
@@ -212,9 +222,10 @@ naive.optimize.embedding = function(tembedding, config, eps) {
 #' create a simplicial set from a distance object
 #'
 #' @keywords internal
+#' @noRd
 #' @param knn list with inform about nearest neighbors (output of knn.info)
 #' @param config list with settings
-#'
+#' 
 #' @return matrix 
 naive.fuzzy.simplicial.set = function(knn, config) {
   
@@ -267,18 +278,18 @@ naive.fuzzy.simplicial.set = function(knn, config) {
 }
 
 
-
-
-#' compute a "smooth" distance to the kth neighbor and approximate first neighbor
+#' compute a "smooth" distance to the kth neighbor and first neighbor
 #'
 #' @keywords internal
+#' @noRd
 #' @param k.dist matrix with distances to k neighbors
 #' @param neighbors numeric, number of neighbors to approximate for
 #' @param iterations integers, number of iterations
 #' @param local.connectivity iteger
 #' @param bandwidth numeric
 #' @param tolerance numeric, for numeric precision
-#' @param min.dist.scale numeric, minimum distance to nearest neighbor (for display)
+#' @param min.dist.scale numeric, minimum distance to nearest neighbor
+#' (for display)
 #'
 #' @return list with two vectors, distances to the kth neighbor,
 #' and distance to the first nearest neighbor 
@@ -298,9 +309,9 @@ smooth.knn.dist = function(k.dist, neighbors,
   
   # precompute constants used within loop
   k.dist.mean = mean(k.dist)
-  k.dist.cols = 1:ncol(k.dist)
+  k.dist.cols = seq_len(ncol(k.dist))
   
-  for (i in 1:nrow(k.dist)) {
+  for (i in seq_len(nrow(k.dist))) {
     # identify distances to ith point
     i.dist = k.dist[i,]
     i.nonzero = i.dist[i.dist!=0]
@@ -322,20 +333,20 @@ smooth.knn.dist = function(k.dist, neighbors,
     
     # iterate to get a normalization factor
     for (n in 2:iterations) {
-      val = sapply(k.dist[i,2:ncol(k.dist)]-rho[i], max, 0)
+      val = pmax(k.dist[i, 2:ncol(k.dist)]-rho[i], 0)
       val = sum(exp(-val/mid))
       if (abs(val-target)<tolerance) {
         break
       }
       if (val>target) {
         hi = mid
-        mid = mean(c(lo, hi))
+        mid = (lo+hi)/2
       } else {
         lo = mid
         if (!is.finite(hi)) {
           mid = mid*2
         } else {
-          mid = mean(c(lo, hi))
+          mid = (lo + hi)/2
         }
       }
     }
