@@ -1,4 +1,4 @@
-a023481767bd4384499d06ebac18fedf *DESCRIPTION
+5a24a42012271ca5fd243cfdcf582597 *DESCRIPTION
 b13efd204a1b35ca2ec2cf08a086774d *LICENSE
 2bb5e44932832dd74ba2c23a211a4b9d *NAMESPACE
 8446721656db8b813bbe82b2e3bd2c0e *R/RcppExports.R
@@ -8,7 +8,7 @@ b13efd204a1b35ca2ec2cf08a086774d *LICENSE
 4681f95dcf7b9d4c98e406b686819df5 *R/knn.R
 9147400b9e750a00adef8440be82e960 *R/umap.R
 4df8d45b7e3b345dded614970a9fda4f *R/umap_checks.R
-1c847a7609b9d09bdbbfec5ff635a3ca *R/umap_learn.R
+37c205b1cfcbdfe2422e3c444f0604ba *R/umap_learn.R
 e7214a230f170a9b0b07afe483b8a562 *R/umap_naive.R
 bfc5f862abee2d403dc449b03d9b02b0 *R/umap_print.R
 94f6f6148063a647171aec029b2a38f2 *R/umap_small.R
@@ -17,10 +17,10 @@ bfc5f862abee2d403dc449b03d9b02b0 *R/umap_print.R
 604bf320b3f7638d145021946ff52b09 *build/vignette.rds
 96cafe523e45ce51f5918580118cf038 *inst/doc/umap.R
 a835cf6ec836b1f16e1ba67af5835c7f *inst/doc/umap.Rmd
-82a9c98630df91601a2d8ea49913bcab *inst/doc/umap.html
+059eba6a81e4ae5296257f604e79ba14 *inst/doc/umap.html
 89db2bca66aa9c99cfb4f09e13ba56de *inst/doc/umap_learn.R
 ff777942e5d2770949f63c6cf6a71412 *inst/doc/umap_learn.Rmd
-4e3f22c3fa9ec652df3f7e41958219c4 *inst/doc/umap_learn.html
+823dd7391244bd2512c83819cdbbb704 *inst/doc/umap_learn.html
 c2260f8777f1f2746cd230c3ad16218a *man/predict.umap.Rd
 7534549ae9dab3a453e87ca61d8a37fb *man/umap.Rd
 4b196db235e1af65d4c49655ef8dcf50 *man/umap.defaults.Rd
