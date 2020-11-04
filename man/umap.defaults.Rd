@@ -4,7 +4,9 @@
 \name{umap.defaults}
 \alias{umap.defaults}
 \title{Default configuration for umap}
-\format{An object of class \code{umap.config} of length 21.}
+\format{
+An object of class \code{umap.config} of length 22.
+}
 \usage{
 umap.defaults
 }
@@ -68,6 +70,8 @@ random_state: integer; seed for random number generation used during umap()
 
 transform_state: integer; seed for random number generation used during
 predict()
+
+knn: object of class umap.knn; precomputed nearest neighbors
 
 knn.repeat: number of times to restart knn search
 

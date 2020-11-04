@@ -5,8 +5,8 @@ library(umap)
 plot.iris = function(x, labels,
          main="A UMAP visualization of the Iris dataset",
          colors=c("#ff7f00", "#e377c2", "#17becf"),
-         pad=0.1, cex=0.65, pch=19, add=FALSE, legend.suffix="",
-         cex.main=1, cex.legend=1) {
+         pad=0.1, cex=0.6, pch=19, add=FALSE, legend.suffix="",
+         cex.main=1, cex.legend=0.85) {
 
   layout = x
   if (is(x, "umap")) {
@@ -25,13 +25,14 @@ plot.iris = function(x, labels,
   mtext(side=3, main, cex=cex.main)
 
   labels.u = unique(labels)
-  legend.pos = "topright"
+  legend.pos = "topleft"
   legend.text = as.character(labels.u)
   if (add) {
-    legend.pos = "bottomright"
+    legend.pos = "bottomleft"
     legend.text = paste(as.character(labels.u), legend.suffix)
   }
-  legend(legend.pos, legend=legend.text,
+
+  legend(legend.pos, legend=legend.text, inset=0.03,
          col=colors[as.integer(labels.u)],
          bty="n", pch=pch, cex=cex.legend)
 }
@@ -55,7 +56,7 @@ iris.umap
 ## ----umap.layout--------------------------------------------------------------
 head(iris.umap$layout, 3)
 
-## ---- fig.width=3.6, fig.height=3.6, dpi=150----------------------------------
+## ---- fig.width=3.2, fig.height=3.2, dpi=150----------------------------------
 plot.iris(iris.umap, iris.labels)
 
 ## -----------------------------------------------------------------------------
@@ -69,8 +70,7 @@ head(iris.wnoise.umap, 3)
 
 ## ---- fig.width=3.6, fig.height=3.6, dpi=150----------------------------------
 plot.iris(iris.umap, iris.labels)
-plot.iris(iris.wnoise.umap, iris.labels, add=T, pch=4,
-          legend.suffix=" (with noise)")
+plot.iris(iris.wnoise.umap, iris.labels, add=T, pch=4, legend.suffix=" (with noise)")
 
 ## ----defaults, eval=FALSE-----------------------------------------------------
 #  umap.defaults
@@ -83,12 +83,30 @@ custom.config = umap.defaults
 custom.config$random_state = 123
 
 ## ----custom2, fig.width=3.6, fig.height=3.6, dpi=150--------------------------
-iris.umap.2 = umap(iris.data, custom.config)
-plot.iris(iris.umap.2, iris.labels,
+iris.umap.config = umap(iris.data, config=custom.config)
+plot.iris(iris.umap.config, iris.labels,
           main="Another UMAP visualization (different seed)")
 
 ## ----custom3, eval=FALSE------------------------------------------------------
-#  iris.umap.3 = umap(iris.data, random_state=123)
+#  iris.umap.args = umap(iris.data, random_state=123)
+
+## -----------------------------------------------------------------------------
+iris.dist = as.matrix(dist(iris.data))
+iris.umap.dist = umap(iris.dist, config=custom.config, input="dist")
+iris.umap.dist
+
+## -----------------------------------------------------------------------------
+iris.umap$knn
+
+## -----------------------------------------------------------------------------
+# extract information on 10 nearest neighbors from iris.umap
+iris.neighbors = iris.umap$knn$indexes[, 1:10]
+iris.neighbors.distances = iris.umap$knn$distances[, 1:10]
+# construct an object with indexes and distances
+iris.knn.10 = umap.knn(indexes=iris.neighbors, distances=iris.neighbors.distances)
+iris.knn.10
+# perform an embedding using the precomputed nearest neighbors
+iris.umap.knn = umap(iris.data, config=custom.config, n_neighbors=10, knn=iris.knn.10)
 
 ## ---- eval=TRUE---------------------------------------------------------------
 # predict in batch, display first item
@@ -97,7 +115,7 @@ predict(iris.umap, iris.wnoise)[1, , drop=FALSE]
 predict(iris.umap, iris.wnoise[1,,drop=FALSE])
 
 ## ---- eval=FALSE--------------------------------------------------------------
-#  iris.umap.4 = umap(iris.data, method="umap-learn")
+#  iris.umap.learn = umap(iris.data, method="umap-learn")
 
 ## ----show.plot.iris-----------------------------------------------------------
 plot.iris
