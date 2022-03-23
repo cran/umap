@@ -41,7 +41,6 @@ iris.data = iris[, grep("Sepal|Petal", colnames(iris))]
 umap.defaults
 
 ## ----umap.learn.config, eval=FALSE--------------------------------------------
-#  ## should display a configuration summary
 #  iris.umap_learn$config
 
 ## ----iris.foo, eval=FALSE-----------------------------------------------------

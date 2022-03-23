@@ -112,7 +112,7 @@ iris.umap.knn = umap(iris.data, config=custom.config, n_neighbors=10, knn=iris.k
 # predict in batch, display first item
 predict(iris.umap, iris.wnoise)[1, , drop=FALSE]
 # predict only first item
-predict(iris.umap, iris.wnoise[1,,drop=FALSE])
+predict(iris.umap, iris.wnoise[1, , drop=FALSE])
 
 ## ---- eval=FALSE--------------------------------------------------------------
 #  iris.umap.learn = umap(iris.data, method="umap-learn")

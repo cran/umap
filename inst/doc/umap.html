@@ -8,36 +8,56 @@
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
 
 <title>Uniform Manifold Approximation and Projection in R</title>
 
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+      .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
 
 
-<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -46,9 +66,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -105,189 +125,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<style type="text/css">body {
-background-color: #fff;
-margin: 1em auto;
-max-width: 700px;
-overflow: visible;
-padding-left: 2em;
-padding-right: 2em;
-font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-font-size: 14px;
-line-height: 1.35;
-}
-#header {
-text-align: center;
-}
-#TOC {
-clear: both;
-margin: 0 0 10px 10px;
-padding: 4px;
-width: 400px;
-border: 1px solid #CCCCCC;
-border-radius: 5px;
-background-color: #f6f6f6;
-font-size: 13px;
-line-height: 1.3;
-}
-#TOC .toctitle {
-font-weight: bold;
-font-size: 15px;
-margin-left: 5px;
-}
-#TOC ul {
-padding-left: 40px;
-margin-left: -1.5em;
-margin-top: 5px;
-margin-bottom: 5px;
-}
-#TOC ul ul {
-margin-left: -2em;
-}
-#TOC li {
-line-height: 16px;
-}
-table {
-margin: 1em auto;
-border-width: 1px;
-border-color: #DDDDDD;
-border-style: outset;
-border-collapse: collapse;
-}
-table th {
-border-width: 2px;
-padding: 5px;
-border-style: inset;
-}
-table td {
-border-width: 1px;
-border-style: inset;
-line-height: 18px;
-padding: 5px 5px;
-}
-table, table th, table td {
-border-left-style: none;
-border-right-style: none;
-}
-table thead, table tr.even {
-background-color: #f7f7f7;
-}
-p {
-margin: 0.5em 0;
-}
-blockquote {
-background-color: #f6f6f6;
-padding: 0.25em 0.75em;
-}
-hr {
-border-style: solid;
-border: none;
-border-top: 1px solid #777;
-margin: 28px 0;
-}
-dl {
-margin-left: 0;
-}
-dl dd {
-margin-bottom: 13px;
-margin-left: 13px;
-}
-dl dt {
-font-weight: bold;
-}
-ul {
-margin-top: 0;
-}
-ul li {
-list-style: circle outside;
-}
-ul ul {
-margin-bottom: 0;
-}
-pre, code {
-background-color: #f7f7f7;
-border-radius: 3px;
-color: #333;
-white-space: pre-wrap; 
-}
-pre {
-border-radius: 3px;
-margin: 5px 0px 10px 0px;
-padding: 10px;
-}
-pre:not([class]) {
-background-color: #f7f7f7;
-}
-code {
-font-family: Consolas, Monaco, 'Courier New', monospace;
-font-size: 85%;
-}
-p > code, li > code {
-padding: 2px 0px;
-}
-div.figure {
-text-align: center;
-}
-img {
-background-color: #FFFFFF;
-padding: 2px;
-border: 1px solid #DDDDDD;
-border-radius: 3px;
-border: 1px solid #CCCCCC;
-margin: 0 5px;
-}
-h1 {
-margin-top: 0;
-font-size: 35px;
-line-height: 40px;
-}
-h2 {
-border-bottom: 4px solid #f7f7f7;
-padding-top: 10px;
-padding-bottom: 2px;
-font-size: 145%;
-}
-h3 {
-border-bottom: 2px solid #f7f7f7;
-padding-top: 10px;
-font-size: 120%;
-}
-h4 {
-border-bottom: 1px solid #f7f7f7;
-margin-left: 8px;
-font-size: 105%;
-}
-h5, h6 {
-border-bottom: 1px solid #ccc;
-font-size: 105%;
-}
-a {
-color: #0033dd;
-text-decoration: none;
-}
-a:hover {
-color: #6666ff; }
-a:visited {
-color: #800080; }
-a:visited:hover {
-color: #BB00BB; }
-a[href^="http:"] {
-text-decoration: underline; }
-a[href^="https:"] {
-text-decoration: underline; }
 
-code > span.kw { color: #555; font-weight: bold; } 
-code > span.dt { color: #902000; } 
-code > span.dv { color: #40a070; } 
-code > span.bn { color: #d14; } 
-code > span.fl { color: #d14; } 
-code > span.ch { color: #d14; } 
-code > span.st { color: #d14; } 
-code > span.co { color: #888888; font-style: italic; } 
-code > span.ot { color: #007020; } 
-code > span.al { color: #ff0000; font-weight: bold; } 
-code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
-</style>
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
 
 
 
@@ -305,16 +144,19 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div id="TOC">
 <ul>
 <li><a href="#introduction">Introduction</a></li>
-<li><a href="#overview">Overview</a><ul>
+<li><a href="#overview">Overview</a>
+<ul>
 <li><a href="#creating-a-projection">Creating a projection</a></li>
 <li><a href="#projecting-new-data">Projecting new data</a></li>
 </ul></li>
-<li><a href="#tuning">Tuning</a><ul>
+<li><a href="#tuning">Tuning</a>
+<ul>
 <li><a href="#configuration-objects">Configuration objects</a></li>
 <li><a href="#additional-arguments">Additional arguments</a></li>
 <li><a href="#input-types">Input types</a></li>
 </ul></li>
-<li><a href="#stability-and-reproducibility">Stability and reproducibility</a><ul>
+<li><a href="#stability-and-reproducibility">Stability and reproducibility</a>
+<ul>
 <li><a href="#initial-embedding">Initial embedding</a></li>
 <li><a href="#prediction">Prediction</a></li>
 </ul></li>
@@ -358,55 +200,55 @@ body {
 <div id="overview" class="section level2">
 <h2>Overview</h2>
 <p>For a practical demonstration, let’s use the <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set">Iris dataset</a>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">head</span>(iris, <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris, <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ## 1          5.1         3.5          1.4         0.2  setosa
 ## 2          4.9         3.0          1.4         0.2  setosa
 ## 3          4.7         3.2          1.3         0.2  setosa</code></pre>
 <p>The first four columns contain data and the last column contains a label. It will be useful to separate those components.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">iris.data =<span class="st"> </span>iris[, <span class="kw">grep</span>(<span class="st">&quot;Sepal|Petal&quot;</span>, <span class="kw">colnames</span>(iris))]</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">iris.labels =<span class="st"> </span>iris[, <span class="st">&quot;Species&quot;</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>iris.data <span class="ot">=</span> iris[, <span class="fu">grep</span>(<span class="st">&quot;Sepal|Petal&quot;</span>, <span class="fu">colnames</span>(iris))]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>iris.labels <span class="ot">=</span> iris[, <span class="st">&quot;Species&quot;</span>]</span></code></pre></div>
 <div id="creating-a-projection" class="section level3">
 <h3>Creating a projection</h3>
 <p>Let’s load the <code>umap</code> package and apply the UMAP transformation.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(umap)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">iris.umap =<span class="st"> </span><span class="kw">umap</span>(iris.data)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(umap)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>iris.umap <span class="ot">=</span> <span class="fu">umap</span>(iris.data)</span></code></pre></div>
 <p>The output is an object and we can get a summary of its contents by printing it.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">iris.umap</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>iris.umap</span></code></pre></div>
 <pre><code>## umap embedding of 150 items in 2 dimensions
 ## object components: layout, data, knn, config</code></pre>
 <p>The main component of the object is ‘layout’, which holds a matrix with coordinates.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">head</span>(iris.umap<span class="op">$</span>layout, <span class="dv">3</span>)</a></code></pre></div>
-<pre><code>##          [,1]      [,2]
-## [1,] 15.95804 -1.418806
-## [2,] 17.80407 -1.531492
-## [3,] 17.59992 -2.239721</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris.umap<span class="sc">$</span>layout, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##           [,1]     [,2]
+## [1,] 11.504224 3.524267
+## [2,]  9.996255 4.143754
+## [3,]  9.475514 3.696084</code></pre>
 <p>These coordinates can be used to visualize the dataset. (The custom plot function, <code>plot.iris</code>, is available at the end of this vignette.)</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">plot.iris</span>(iris.umap, iris.labels)</a></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.iris</span>(iris.umap, iris.labels)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 </div>
 <div id="projecting-new-data" class="section level3">
 <h3>Projecting new data</h3>
 <p>Once we have a ‘umap’ object describing an embedding of a dataset into a low-dimensional layout, we can project other data onto the same manifold.</p>
 <p>To demonstrate this, we need a second dataset with the same data features as the training data. Let’s create such data by adding some noise to the original.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">iris.wnoise =<span class="st"> </span>iris.data <span class="op">+</span><span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">150</span><span class="op">*</span><span class="dv">40</span>, <span class="dv">0</span>, <span class="fl">0.1</span>), <span class="dt">ncol=</span><span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">colnames</span>(iris.wnoise) =<span class="st"> </span><span class="kw">colnames</span>(iris.data)</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw">head</span>(iris.wnoise, <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>iris.wnoise <span class="ot">=</span> iris.data <span class="sc">+</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">150</span><span class="sc">*</span><span class="dv">40</span>, <span class="dv">0</span>, <span class="fl">0.1</span>), <span class="at">ncol=</span><span class="dv">4</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(iris.wnoise) <span class="ot">=</span> <span class="fu">colnames</span>(iris.data)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris.wnoise, <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width
 ## 1     5.183373    3.525821     1.515123   0.3285499
 ## 2     4.872395    3.096451     1.467537   0.2094982
 ## 3     4.664500    3.150872     1.421417   0.2190057</code></pre>
 <p>We can now arrange these perturbed observations onto the same layout as before. Following R’s design pattern for fitted models, this is performed via <code>predict</code>.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">iris.wnoise.umap =<span class="st"> </span><span class="kw">predict</span>(iris.umap, iris.wnoise)</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">head</span>(iris.wnoise.umap, <span class="dv">3</span>)</a></code></pre></div>
-<pre><code>##       [,1]      [,2]
-## 1 15.30520 -1.921424
-## 2 18.09914 -1.361412
-## 3 17.47446 -2.782222</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>iris.wnoise.umap <span class="ot">=</span> <span class="fu">predict</span>(iris.umap, iris.wnoise)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris.wnoise.umap, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##        [,1]     [,2]
+## 1 11.463041 2.922437
+## 2  9.761948 4.722454
+## 3  8.941461 3.306888</code></pre>
 <p>The output is a matrix with coordinates. We can visualize these points alongside the original.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">plot.iris</span>(iris.umap, iris.labels)</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw">plot.iris</span>(iris.wnoise.umap, iris.labels, <span class="dt">add=</span>T, <span class="dt">pch=</span><span class="dv">4</span>, <span class="dt">legend.suffix=</span><span class="st">&quot; (with noise)&quot;</span>)</a></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.iris</span>(iris.umap, iris.labels)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.iris</span>(iris.wnoise.umap, iris.labels, <span class="at">add=</span>T, <span class="at">pch=</span><span class="dv">4</span>, <span class="at">legend.suffix=</span><span class="st">&quot; (with noise)&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 <p>The new observations lie close to their original counterparts.</p>
 </div>
 </div>
@@ -416,7 +258,7 @@ body {
 <div id="configuration-objects" class="section level3">
 <h3>Configuration objects</h3>
 <p>The default configuration object is called <code>umap.defaults</code>. This is a list encoding default values for all the parameters used by the algorithm.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">umap.defaults</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>umap.defaults</span></code></pre></div>
 <pre><code>## umap configuration parameters
 ##            n_neighbors: 15
 ##           n_components: 2
@@ -442,19 +284,19 @@ body {
 ##        umap_learn_args: NA</code></pre>
 <p>For a description of each field, see the documentation in <code>help(umap.defaults)</code> or the original publication.</p>
 <p>To create a custom configuration, we can make a copy of the default object and then update its fields. For example, let’s change the seed for random number generation.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">custom.config =<span class="st"> </span>umap.defaults</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2">custom.config<span class="op">$</span>random_state =<span class="st"> </span><span class="dv">123</span></a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>custom.config <span class="ot">=</span> umap.defaults</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>custom.config<span class="sc">$</span>random_state <span class="ot">=</span> <span class="dv">123</span></span></code></pre></div>
 <p>We can observe the changed settings by inspecting the object again (try it). To perform the UMAP projection with these settings, we can run the projection again and provide the configuration object as a second argument.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">iris.umap.config =<span class="st"> </span><span class="kw">umap</span>(iris.data, <span class="dt">config=</span>custom.config)</a>
-<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="kw">plot.iris</span>(iris.umap.config, iris.labels,</a>
-<a class="sourceLine" id="cb18-3" data-line-number="3">          <span class="dt">main=</span><span class="st">&quot;Another UMAP visualization (different seed)&quot;</span>)</a></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>iris.umap.config <span class="ot">=</span> <span class="fu">umap</span>(iris.data, <span class="at">config=</span>custom.config)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.iris</span>(iris.umap.config, iris.labels,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">main=</span><span class="st">&quot;Another UMAP visualization (different seed)&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 <p>The result is slightly different than before due to a new instantiation of the random number generator.</p>
 </div>
 <div id="additional-arguments" class="section level3">
 <h3>Additional arguments</h3>
 <p>Another way to customize the algorithm is to specify the parameter values one-by-one as arguments to the function call. The command below achieves equivalent results to the above.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">iris.umap.args =<span class="st"> </span><span class="kw">umap</span>(iris.data, <span class="dt">random_state=</span><span class="dv">123</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>iris.umap.args <span class="ot">=</span> <span class="fu">umap</span>(iris.data, <span class="at">random_state=</span><span class="dv">123</span>)</span></code></pre></div>
 <p>The coordinates in this output object should match the ones from <code>iris.umap.config</code> (check it!).</p>
 <p>Behind the scenes, the <code>umap</code> function call extracts most of the parameter values from the default configuration, and then replaces the value of <code>random_state</code> with the newly specified value. It is also possible to use a custom configuration and parameter values together.</p>
 </div>
@@ -462,30 +304,30 @@ body {
 <h3>Input types</h3>
 <p>All the examples above apply the umap transformation on a raw dataset. The first stage in the algorithm is the calculation of nearest neighbors and distances between them. In cases when these distances or nearest neighbors are known a-priori, the <code>umap</code> function can start with those inputs instead.</p>
 <p>To use a distance matrix instead of raw data, we can set the <code>input</code> argument to ‘dist’.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">iris.dist =<span class="st"> </span><span class="kw">as.matrix</span>(<span class="kw">dist</span>(iris.data))</a>
-<a class="sourceLine" id="cb20-2" data-line-number="2">iris.umap.dist =<span class="st"> </span><span class="kw">umap</span>(iris.dist, <span class="dt">config=</span>custom.config, <span class="dt">input=</span><span class="st">&quot;dist&quot;</span>)</a>
-<a class="sourceLine" id="cb20-3" data-line-number="3">iris.umap.dist</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>iris.dist <span class="ot">=</span> <span class="fu">as.matrix</span>(<span class="fu">dist</span>(iris.data))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>iris.umap.dist <span class="ot">=</span> <span class="fu">umap</span>(iris.dist, <span class="at">config=</span>custom.config, <span class="at">input=</span><span class="st">&quot;dist&quot;</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>iris.umap.dist</span></code></pre></div>
 <pre><code>## umap embedding of 150 items in 2 dimensions
 ## object components: layout, data, knn, config</code></pre>
 <p>Because <code>iris.umap.dist</code> is computed with the custom configuration, it holds the same embedding layout as <code>iris.umap.config</code> above (check it!). However, this object does not carry the original data. As such, it cannot be used to ‘predict’ new data into the embedding: attempting a command like <code>predict(iris.umap.dist, iris.wnoise)</code> will generate an error. This is because the algorithm will not have sufficient information to computing distances between new data points and previously embedded data.</p>
 <p>Another way to provide data to function <code>umap</code> is via precomputed nearest neighbors. As we saw above, each object of class ‘umap’ has a component called ‘knn’. We can preview this component by printing it.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">iris.umap<span class="op">$</span>knn</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>iris.umap<span class="sc">$</span>knn</span></code></pre></div>
 <pre><code>## k-nearest neighbors for 150 items with k=15
 ## object components: indexes, distances
 ## Note: nearest neighbors may be approximate</code></pre>
 <p>This is actually a list with two matrices. One matrix associates each data point to a fixed number of nearest neighbors (the default is 15). The other matrix specifies the distances between them.</p>
 <p>To see how to use this data structure, let’s construct an object describing 10 nearest neighbors, and then perform an embedding.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="co"># extract information on 10 nearest neighbors from iris.umap</span></a>
-<a class="sourceLine" id="cb24-2" data-line-number="2">iris.neighbors =<span class="st"> </span>iris.umap<span class="op">$</span>knn<span class="op">$</span>indexes[, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a>
-<a class="sourceLine" id="cb24-3" data-line-number="3">iris.neighbors.distances =<span class="st"> </span>iris.umap<span class="op">$</span>knn<span class="op">$</span>distances[, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a>
-<a class="sourceLine" id="cb24-4" data-line-number="4"><span class="co"># construct an object with indexes and distances</span></a>
-<a class="sourceLine" id="cb24-5" data-line-number="5">iris.knn<span class="fl">.10</span> =<span class="st"> </span><span class="kw">umap.knn</span>(<span class="dt">indexes=</span>iris.neighbors, <span class="dt">distances=</span>iris.neighbors.distances)</a>
-<a class="sourceLine" id="cb24-6" data-line-number="6">iris.knn<span class="fl">.10</span></a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract information on 10 nearest neighbors from iris.umap</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>iris.neighbors <span class="ot">=</span> iris.umap<span class="sc">$</span>knn<span class="sc">$</span>indexes[, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>iris.neighbors.distances <span class="ot">=</span> iris.umap<span class="sc">$</span>knn<span class="sc">$</span>distances[, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># construct an object with indexes and distances</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>iris.knn<span class="fl">.10</span> <span class="ot">=</span> <span class="fu">umap.knn</span>(<span class="at">indexes=</span>iris.neighbors, <span class="at">distances=</span>iris.neighbors.distances)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>iris.knn<span class="fl">.10</span></span></code></pre></div>
 <pre><code>## k-nearest neighbors for 150 items with k=10
 ## object components: indexes, distances
 ## Note: nearest neighbors may be approximate</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="co"># perform an embedding using the precomputed nearest neighbors</span></a>
-<a class="sourceLine" id="cb26-2" data-line-number="2">iris.umap.knn =<span class="st"> </span><span class="kw">umap</span>(iris.data, <span class="dt">config=</span>custom.config, <span class="dt">n_neighbors=</span><span class="dv">10</span>, <span class="dt">knn=</span>iris.knn<span class="fl">.10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perform an embedding using the precomputed nearest neighbors</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>iris.umap.knn <span class="ot">=</span> <span class="fu">umap</span>(iris.data, <span class="at">config=</span>custom.config, <span class="at">n_neighbors=</span><span class="dv">10</span>, <span class="at">knn=</span>iris.knn<span class="fl">.10</span>)</span></code></pre></div>
 <p>In this function call, argument <code>config</code> specifies most of the parameter values. Because the custom configuration has <code>n_neighbors</code> at 15 and here we want to use 10 instead, the next argument sets this new value. The final argument provides our prepared object. Functions <code>umap</code> detect the availability of this object and can skip calculating nearest neighbors. This can substantially improve running times.</p>
 </div>
 </div>
@@ -500,14 +342,14 @@ body {
 <div id="prediction" class="section level3">
 <h3>Prediction</h3>
 <p>Projection of new data onto an existing embedding uses a separate random number generator, which is controlled via parameter <code>transform_state</code>. This seed ensures that predictions executed in exactly the same way produce identical output each time. The default algorithm further implements a mechanism by which predictions are consistent when performed individually or in batch. Let’s look at an example based on the Iris data.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="co"># predict in batch, display first item</span></a>
-<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="kw">predict</span>(iris.umap, iris.wnoise)[<span class="dv">1</span>, , drop=<span class="ot">FALSE</span>]</a></code></pre></div>
-<pre><code>##      [,1]      [,2]
-## 1 15.3052 -1.921424</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="co"># predict only first item</span></a>
-<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="kw">predict</span>(iris.umap, iris.wnoise[<span class="dv">1</span>,,<span class="dt">drop=</span><span class="ot">FALSE</span>])</a></code></pre></div>
-<pre><code>##      [,1]      [,2]
-## 1 15.3052 -1.921424</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predict in batch, display first item</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(iris.umap, iris.wnoise)[<span class="dv">1</span>, , drop<span class="ot">=</span><span class="cn">FALSE</span>]</span></code></pre></div>
+<pre><code>##       [,1]     [,2]
+## 1 11.46304 2.922437</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predict only first item</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(iris.umap, iris.wnoise[<span class="dv">1</span>, , <span class="at">drop=</span><span class="cn">FALSE</span>])</span></code></pre></div>
+<pre><code>##       [,1]     [,2]
+## 1 11.46304 2.922437</code></pre>
 <p>The mechanism that enables stability between batch and individual predictions also ensures that predictions are stable when data are presented in a different order. However, this mechanism is not enforced (for performance reasons) when the new data contain more than a thousand rows. This is an implementation detail and may change in future versions.</p>
 </div>
 </div>
@@ -516,7 +358,7 @@ body {
 <p>The package provides two implementations of the umap method, one written in R (with help from several packages from CRAN) and one accessed via an external python module.</p>
 <p>The implementation written in R is the default. It follows the design principles of the UMAP algorithm and its running time scales better-than-quadratically with the number of items (points) in a dataset. It is thus in principle suitable for use on datasets with thousands of points. This implementation is the default because it should be functional without extensive dependencies.</p>
 <p>The second available implementation is a wrapper for a python package <code>umap-learn</code>. To enable this implementation, specify the argument <code>method</code>.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">iris.umap.learn =<span class="st"> </span><span class="kw">umap</span>(iris.data, <span class="dt">method=</span><span class="st">&quot;umap-learn&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>iris.umap.learn <span class="ot">=</span> <span class="fu">umap</span>(iris.data, <span class="at">method=</span><span class="st">&quot;umap-learn&quot;</span>)</span></code></pre></div>
 <p>This command has several dependencies. The <code>reticulate</code> package must be installed and loaded (use <code>install.packages(&quot;reticulate&quot;)</code> and <code>library(reticulate)</code>). Furthermore, the <code>umap-learn</code> python package must be available (see the <a href="https://github.com/lmcinnes/umap">package repository</a> for instructions). If either of these components is not available, the above command will display an error message.</p>
 <p>A separate vignette explains additional aspects of interfacing with <code>umap-learn</code>, including handling of discrepancies between releases.</p>
 <p>Note that it will not be possible to produce exactly the same output from the two implementations due to inequivalent random number generators in R and python, and due to slight discrepancies in the implementations.</p>
@@ -525,7 +367,7 @@ body {
 <div id="appendix" class="section level2">
 <h2>Appendix</h2>
 <p>The custom plot function used to visualize the Iris dataset:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">plot.iris</a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>plot.iris</span></code></pre></div>
 <pre><code>## function(x, labels,
 ##          main=&quot;A UMAP visualization of the Iris dataset&quot;,
 ##          colors=c(&quot;#ff7f00&quot;, &quot;#e377c2&quot;, &quot;#17becf&quot;),
@@ -560,16 +402,16 @@ body {
 ##          col=colors[as.integer(labels.u)],
 ##          bty=&quot;n&quot;, pch=pch, cex=cex.legend)
 ## }
-## &lt;bytecode: 0x55bca5af9d58&gt;</code></pre>
+## &lt;bytecode: 0x55a1c508b8e0&gt;</code></pre>
 <p>Summary of R session:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">sessionInfo</span>()</a></code></pre></div>
-<pre><code>## R version 3.6.1 (2019-07-05)
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+<pre><code>## R version 4.1.1 (2021-08-10)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 18.04.5 LTS
+## Running under: Ubuntu 20.04.4 LTS
 ## 
 ## Matrix products: default
-## BLAS:   /software/opt/R/R-3.6.1/lib/libRblas.so
-## LAPACK: /software/opt/R/R-3.6.1/lib/libRlapack.so
+## BLAS:   /software/opt/R/R-4.1.1/lib/libRblas.so
+## LAPACK: /software/opt/R/R-4.1.1/lib/libRlapack.so
 ## 
 ## locale:
 ##  [1] LC_CTYPE=en_GB.UTF-8       LC_NUMERIC=C              
@@ -583,15 +425,17 @@ body {
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] umap_0.2.7.0
+## [1] umap_0.2.8.0
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.5      lattice_0.20-38 digest_0.6.23   RSpectra_0.16-0
-##  [5] grid_3.6.1      jsonlite_1.7.1  magrittr_1.5    evaluate_0.14  
-##  [9] rlang_0.4.4     stringi_1.4.3   Matrix_1.2-18   reticulate_1.18
-## [13] rmarkdown_2.0   tools_3.6.1     stringr_1.4.0   xfun_0.11      
-## [17] yaml_2.2.0      compiler_3.6.1  askpass_1.1     htmltools_0.5.0
-## [21] openssl_1.4.3   knitr_1.26</code></pre>
+##  [1] Rcpp_1.0.7      knitr_1.34      magrittr_2.0.1  lattice_0.20-44
+##  [5] R6_2.5.1        rlang_0.4.11    fastmap_1.1.0   highr_0.9      
+##  [9] stringr_1.4.0   tools_4.1.1     grid_4.1.1      xfun_0.26      
+## [13] png_0.1-7       RSpectra_0.16-0 jquerylib_0.1.4 htmltools_0.5.2
+## [17] askpass_1.1     openssl_1.4.5   yaml_2.2.1      digest_0.6.27  
+## [21] Matrix_1.3-4    sass_0.4.0      evaluate_0.14   rmarkdown_2.11 
+## [25] stringi_1.7.4   compiler_4.1.1  bslib_0.3.0     reticulate_1.21
+## [29] jsonlite_1.7.2</code></pre>
 <p> </p>
 </div>
 
