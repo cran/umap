@@ -1,6 +1,6 @@
 Package: umap
 Title: Uniform Manifold Approximation and Projection
-Version: 0.2.8.0
+Version: 0.2.9.0
 Authors@R: 
     person("Tomasz", "Konopka", , "tokonopka@gmail.com", role = c("aut", "cre"))
 Author: Tomasz Konopka [aut, cre]
@@ -12,7 +12,7 @@ Description: Uniform manifold approximation and projection is a technique
     for nearest-neighbor search and for embedding. The second implementation
     is a wrapper for 'python' package 'umap-learn' (requires separate
     installation, see vignette for more details).
-Depends: R (>= 3.1.2)
+Depends: R (>= 3.6.0)
 Imports: Matrix, methods, openssl, reticulate, Rcpp (>= 0.12.6),
         RSpectra, stats
 License: MIT + file LICENSE
@@ -24,6 +24,6 @@ VignetteBuilder: knitr
 Encoding: UTF-8
 RoxygenNote: 7.1.2
 NeedsCompilation: yes
-Packaged: 2022-03-23 18:54:20 UTC; tkonopka
+Packaged: 2022-08-15 18:22:11 UTC; tkonopka
 Repository: CRAN
-Date/Publication: 2022-03-23 20:30:02 UTC
+Date/Publication: 2022-08-25 06:10:01 UTC

@@ -177,11 +177,11 @@ body {
 <h2>Usage</h2>
 <p>As prep, let’s load the package and prepare a small dataset.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(umap)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>iris.data <span class="ot">=</span> iris[, <span class="fu">grep</span>(<span class="st">&quot;Sepal|Petal&quot;</span>, <span class="fu">colnames</span>(iris))]</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>iris.data <span class="ot">&lt;-</span> iris[, <span class="fu">grep</span>(<span class="st">&quot;Sepal|Petal&quot;</span>, <span class="fu">colnames</span>(iris))]</span></code></pre></div>
 <p>The basic command to perform dimensional reduction is <code>umap</code>. By default, this function uses an implementation written in R. To use the python package <code>umap-learn</code> instead, that package and its dependencies must be installed separately (see <a href="https://pypi.org/project/umap-learn/">python package index</a> or the <a href="https://github.com/lmcinnes/umap">package source</a>). The R package <code>reticulate</code> is also required (use <code>install.packages(&#39;reticulate&#39;) and library(&#39;reticulate&#39;)</code>).</p>
 <p>After completing installations, the python implementation is activated by specifying <code>method=&quot;umap-learn&quot;</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>iris.umap_learn <span class="ot">=</span> <span class="fu">umap</span>(iris.data, <span class="at">method=</span><span class="st">&quot;umap-learn&quot;</span>)</span></code></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>iris.umap_learn <span class="ot">&lt;-</span> <span class="fu">umap</span>(iris.data, <span class="at">method=</span><span class="st">&quot;umap-learn&quot;</span>)</span></code></pre></div>
 <p>(This command is not actually executed in the vignette because <code>umap-learn</code> may not be available on the rendering system. If <code>umap-learn</code> is available, the command should execute quietly and create a new object <code>iris.umap_learn</code> that contains an embedding.)</p>
 </div>
 <div id="tuning-umap-learn" class="section level2">
@@ -224,7 +224,7 @@ body {
 <p>A configuration object can contain many components, but not all may be used in a calculation. To verify that a setting is actually passed to <code>umap-learn</code>, ensure that it appears in <code>umap_learn_args</code> in the output.</p>
 <p>As an example, consider setting <code>foo</code> and <code>n_epochs</code> during the function call.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## (not evaluated in vignette)</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>iris.foo <span class="ot">=</span> <span class="fu">umap</span>(iris.data, <span class="at">method=</span><span class="st">&quot;umap-learn&quot;</span>, <span class="at">foo=</span><span class="dv">4</span>, <span class="at">n_epochs=</span><span class="dv">100</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>iris.foo <span class="ot">&lt;-</span> <span class="fu">umap</span>(iris.data, <span class="at">method=</span><span class="st">&quot;umap-learn&quot;</span>, <span class="at">foo=</span><span class="dv">4</span>, <span class="at">n_epochs=</span><span class="dv">100</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>iris.foo<span class="sc">$</span>config</span></code></pre></div>
 <p>Inspecting the output configuration will reveal that both <code>foo</code> and <code>n_epochs</code> are recorded (in the latter case, the default value is replaced by the new value). However, <code>foo</code> should not appear in <code>umap_learn_args</code>. This means that <code>foo</code> was not actually passed on to <code>umap-learn</code>.</p>
 </div>
@@ -237,8 +237,8 @@ body {
 <h3>Custom constructors</h3>
 <p>It is possible to set <code>umap_learn_args</code> manually while calling <code>umap</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## (not evaluated in vignette) </span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>iris.custom <span class="ot">=</span> <span class="fu">umap</span>(iris.data, <span class="at">method=</span><span class="st">&quot;umap-learn&quot;</span>,</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">umap_learn_args=</span><span class="fu">c</span>(<span class="st">&quot;n_neighbors&quot;</span>, <span class="st">&quot;n_epochs&quot;</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>iris.custom <span class="ot">&lt;-</span> <span class="fu">umap</span>(iris.data, <span class="at">method=</span><span class="st">&quot;umap-learn&quot;</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">umap_learn_args=</span><span class="fu">c</span>(<span class="st">&quot;n_neighbors&quot;</span>, <span class="st">&quot;n_epochs&quot;</span>))</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>iris.custom<span class="sc">$</span>config</span></code></pre></div>
 <p>Here, only the two specified arguments have been passed on to the calculation.</p>
 <p> </p>
@@ -268,17 +268,17 @@ body {
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] umap_0.2.8.0
+## [1] umap_0.2.9.0
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.7      knitr_1.34      magrittr_2.0.1  lattice_0.20-44
-##  [5] R6_2.5.1        rlang_0.4.11    fastmap_1.1.0   highr_0.9      
-##  [9] stringr_1.4.0   tools_4.1.1     grid_4.1.1      xfun_0.26      
-## [13] png_0.1-7       RSpectra_0.16-0 jquerylib_0.1.4 htmltools_0.5.2
-## [17] askpass_1.1     openssl_1.4.5   yaml_2.2.1      digest_0.6.27  
-## [21] Matrix_1.3-4    sass_0.4.0      evaluate_0.14   rmarkdown_2.11 
-## [25] stringi_1.7.4   compiler_4.1.1  bslib_0.3.0     reticulate_1.21
-## [29] jsonlite_1.7.2</code></pre>
+##  [1] Rcpp_1.0.7        knitr_1.34        magrittr_2.0.1    lattice_0.20-44  
+##  [5] R6_2.5.1          rlang_1.0.2       fastmap_1.1.0     highr_0.9        
+##  [9] stringr_1.4.0     tools_4.1.1       grid_4.1.1        data.table_1.14.0
+## [13] xfun_0.26         png_0.1-7         cli_3.3.0         RSpectra_0.16-0  
+## [17] jquerylib_0.1.4   htmltools_0.5.2   askpass_1.1       openssl_1.4.5    
+## [21] yaml_2.2.1        digest_0.6.27     Matrix_1.4-2      sass_0.4.0       
+## [25] evaluate_0.14     rmarkdown_2.11    stringi_1.7.4     compiler_4.1.1   
+## [29] bslib_0.3.0       reticulate_1.21   jsonlite_1.7.2</code></pre>
 <p> </p>
 </div>
 
