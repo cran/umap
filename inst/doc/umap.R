@@ -70,7 +70,8 @@ head(iris.wnoise.umap, 3)
 
 ## ---- fig.width=3.6, fig.height=3.6, dpi=150----------------------------------
 plot.iris(iris.umap, iris.labels)
-plot.iris(iris.wnoise.umap, iris.labels, add=T, pch=4, legend.suffix=" (with noise)")
+plot.iris(iris.wnoise.umap, iris.labels,
+          add=T, pch=4, legend.suffix=" (with noise)")
 
 ## ----defaults, eval=FALSE-----------------------------------------------------
 #  umap.defaults
@@ -103,10 +104,12 @@ iris.umap$knn
 iris.neighbors <- iris.umap$knn$indexes[, 1:10]
 iris.neighbors.distances <- iris.umap$knn$distances[, 1:10]
 # construct an object with indexes and distances
-iris.knn.10 <- umap.knn(indexes=iris.neighbors, distances=iris.neighbors.distances)
+iris.knn.10 <- umap.knn(indexes=iris.neighbors,
+                        distances=iris.neighbors.distances)
 iris.knn.10
 # perform an embedding using the precomputed nearest neighbors
-iris.umap.knn <- umap(iris.data, config=custom.config, n_neighbors=10, knn=iris.knn.10)
+iris.umap.knn <- umap(iris.data, config=custom.config,
+                      n_neighbors=10, knn=iris.knn.10)
 
 ## ---- eval=TRUE---------------------------------------------------------------
 # predict in batch, display first item
